@@ -19,13 +19,22 @@ function DetailData() {
 
   // fetch the meteor data and set it to meteorData state
   async function getMeteorData() {
-    const data = await fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
-      .then((response) => response.json());
-    setMeteorData(data);
-    const latLongData = data.map((meteor) => ([parseFloat(meteor.reclong), parseFloat(meteor.reclat)]));
-    console.log(latLongData);
-    console.log(data[0], latLongData[0]);
-    getLocation(latLongData);
+    try {
+      const response = await fetch('https://data.nasa.gov/resource/gh4g-9sfh.json');
+      const data = await response.json();
+
+      setMeteorData(data);
+
+      const latLongData = data.map((meteor) => ({
+        lon: parseFloat(meteor.reclong),
+        lat: parseFloat(meteor.reclat),
+      }));
+      console.log(data[147]);
+
+      await getLocation(latLongData);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
