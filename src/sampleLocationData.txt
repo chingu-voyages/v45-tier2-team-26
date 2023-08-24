@@ -1,0 +1,52 @@
+Object { 
+
+​   address_line1: "Katschhof 2"
+​​
+    address_line2: "52062 Aachen, Germany"
+​​
+    category: "building"
+​​
+    city: "Aachen"
+    ​​
+    country: "Germany"
+    ​​
+    country_code: "de"
+    ​​
+    county: "Städteregion Aachen"
+    ​​
+    datasource: Object { sourcename: "openstreetmap", attribution: "© OpenStreetMap contributors", license: "Open Database License", … }
+    ​​
+    distance: 3.3835920461491957
+    ​​
+    district: "Aachen-Mitte"
+    ​​
+    formatted: "Katschhof 2, 52062 Aachen, Germany"
+    ​​
+    housenumber: "2"
+    ​​
+    lat: 50.7751128
+    ​​
+    lon: 6.083459577032546
+    ​​
+    place_id: "513492676d7655184059025b6fe536634940f00102f901a7a9fd0400000000c00203"
+    ​​
+    plus_code: "9F28Q3GM+29"
+    ​​
+    plus_code_short: "GM+29 Aachen, Städteregion Aachen, Germany"
+    ​​
+    postcode: "52062"
+    ​​
+    query: Object { lon: 6.08333, lat: 50.775, plus_code: "9F28Q3GM+28" }
+    ​​
+    rank: Object { importance: 0.00000999999999995449, popularity: 9.995467104553104 }
+    ​​
+    result_type: "building"
+    ​​
+    state: "North Rhine-Westphalia"
+    ​​
+    street: "Katschhof"
+    ​​
+    suburb: "Burtscheid"
+    ​​
+    timezone: Object { name: "Europe/Berlin", offset_STD: "+01:00", offset_STD_seconds: 3600, … }
+}
