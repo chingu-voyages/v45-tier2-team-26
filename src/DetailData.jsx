@@ -25,13 +25,20 @@ function DetailData() {
 
       setMeteorData(data);
 
-      const latLongData = data.map((meteor) => ({
-        lon: parseFloat(meteor.reclong),
-        lat: parseFloat(meteor.reclat),
-      }));
-      console.log(data[147]);
+      const latLongData = data.map((meteor) => (
+        {
+          lon: parseFloat(meteor.reclong),
+          lat: parseFloat(meteor.reclat),
+        }
+      ));
+      console.log(latLongData[47]);
 
-      await getLocation(latLongData);
+      const locations = await getLocation(latLongData.slice(0, -900));//Currently only reverse geocoding for the first 100 lat/lon pairs
+      //There is an error happening because not all meteor strikes have a lat/lon. This exits the whole
+      // fetch request in getLocation. So maybe we need to subset latLongData to exclude NaNs? 
+      // Then we can use locations.query.lon and locations.query.lat to match back up the locations to 
+      // the original meteor data?
+      console.log(locations);
     } catch (error) {
       console.error(error);
     }
