@@ -8,6 +8,7 @@ export default function Header() {
       </section>
 
       <section className="inputFields">
+
         <section className="columnGroup">
           <div className="nameGroup">
             <label htmlFor="">Name:</label>
@@ -18,6 +19,7 @@ export default function Header() {
             <input type="text" />
           </div>
         </section>
+
         <section className="columnGroup">
           <div className="nameGroup">
             <label htmlFor="">Composition:</label>
@@ -25,8 +27,9 @@ export default function Header() {
           </div>
           <div className="yearGroup">
             <label htmlFor="">Mass Range:</label>
-            <input type="slider" />
+            <input type="range" />
           </div>
+
         </section>
       </section>
 
