@@ -1,6 +1,8 @@
 import './header.css';
 
 export default function Header() {
+  const placeholder = 25;
+
   return (
     <header>
       <section className="logo">
@@ -27,13 +29,18 @@ export default function Header() {
           </div>
           <div className="fieldGroup" id="range">
             <label htmlFor="">Mass Range:</label>
-            <input type="range" />
+
+            <div className="sliderGroup">
+              <input type="range" min="0" max="100" className="rangeSlider" />
+              <p className="sliderValue">{`${placeholder} Meters`}</p>
+            </div>
+
           </div>
 
         </section>
       </section>
 
-      <section className="searchBarBtns">
+      <section className="headerBtns">
         <button type="button" className="searchBtn">Search</button>
         <button type="button" className="clearBtn">Clear</button>
       </section>
