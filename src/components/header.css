@@ -1,15 +1,34 @@
 header {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    padding: 1em 2em;
+}
+
+h1 {
+    font-size: 3rem;
 }
 
 .inputFields {
     display: flex;
+    gap: 2em;
 }
 
 .columnGroup {
     display: flex;
     flex-direction: column;
     gap: 1em;
+}
+
+.searchBarBtns {
+    display: flex;
+    gap: 1em;
+}
+
+button {
+    border: none;
+    border-radius: 0.7em;
+    padding: 0.7em;
+    font-size: 1.1rem;
+    font-weight: 800;
 }
