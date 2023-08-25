@@ -1,0 +1,15 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.inputFields {
+    display: flex;
+}
+
+.columnGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
