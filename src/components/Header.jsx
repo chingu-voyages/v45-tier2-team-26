@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import './header.css';
 
 export default function Header() {
-  const placeholder = 25;
-
+  const [sliderValue, setSliderValue] = useState(50);
+  const handleSliderChange = (e) => {
+    setSliderValue(e.target.value);
+  };
   return (
     <header>
       <section className="logo">
@@ -31,8 +34,8 @@ export default function Header() {
             <label htmlFor="">Mass Range:</label>
 
             <div className="sliderGroup">
-              <input type="range" min="0" max="100" className="rangeSlider" />
-              <p className="sliderValue">{`${placeholder} Meters`}</p>
+              <input type="range" min="0" max="100" onChange={handleSliderChange} className="rangeSlider" />
+              <p className="sliderValue">{`${sliderValue} Meters`}</p>
             </div>
 
           </div>
