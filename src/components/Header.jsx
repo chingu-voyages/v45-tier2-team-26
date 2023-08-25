@@ -29,8 +29,8 @@ export default function Header() {
       </section>
 
       <section className="searchBarBtns">
-        <button className="searchBtn">Search</button>
-        <button className="clearBtn">Clear</button>
+        <button type="button" className="searchBtn">Search</button>
+        <button type="button" className="clearBtn">Clear</button>
       </section>
     </header>
   );
