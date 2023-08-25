@@ -10,22 +10,22 @@ export default function Header() {
       <section className="inputFields">
 
         <section className="columnGroup">
-          <div className="nameGroup">
+          <div className="fieldGroup" id="name">
             <label htmlFor="">Name:</label>
             <input type="text" />
           </div>
-          <div className="yearGroup">
+          <div className="fieldGroup" id="year">
             <label htmlFor="">Year:</label>
             <input type="text" />
           </div>
         </section>
 
         <section className="columnGroup">
-          <div className="nameGroup">
+          <div className="fieldGroup" id="composition">
             <label htmlFor="">Composition:</label>
             <input type="text" />
           </div>
-          <div className="yearGroup">
+          <div className="fieldGroup" id="range">
             <label htmlFor="">Mass Range:</label>
             <input type="range" />
           </div>
