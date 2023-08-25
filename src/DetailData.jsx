@@ -20,16 +20,16 @@ function DetailData {
         <tbody>
           {jsonData.map(item => (
             <tr key={item.id}>
-              <td>{item.name}</td>
-              <td>{item.id}</td>
-              <td>{item.nametype}</td>
-              <td>{item.recclass}</td>
-              <td>{item.mass}</td>
-              <td>{item.fall}</td>
-              <td>{item.year}</td>
-              <td>{item.reclat}</td>
-              <td>{item.reclong}</td>
-              <td>{item.geolocation}</td>
+              <td>{data.name}</td>
+              <td>{data.id}</td>
+              <td>{data.nametype}</td>
+              <td>{data.recclass}</td>
+              <td>{data.mass}</td>
+              <td>{data.fall}</td>
+              <td>{data.year}</td>
+              <td>{data.reclat}</td>
+              <td>{data.reclong}</td>
+              <td>{data.geolocation}</td>
             </tr>
           ))}
         </tbody>
