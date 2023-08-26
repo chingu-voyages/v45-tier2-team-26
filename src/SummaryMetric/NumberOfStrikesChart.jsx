@@ -5,9 +5,7 @@ function NumberByYearChart({ label, dataObject, type }) {
   if (!dataObject) {
     return null;
   }
-  console.log('numberOfStrikesByYear', dataObject);
-  console.log('labels', Object.keys(dataObject));
-  console.log('data', Object.values(dataObject));
+
   const data = {
     labels: Object.keys(dataObject),
     datasets: [

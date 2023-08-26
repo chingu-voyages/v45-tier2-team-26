@@ -8,11 +8,12 @@ function SummaryMetric() {
   // This state is for testing purposes only. It will be replaced by props later.
   const [meteoriteData, setMeteoriteData] = useState(null);
   useEffect(() => {
-    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 100)));
+    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 1000)));
   }, []);
   console.log('meteoriteData', meteoriteData);
 
   const [numberByYearStep, setNumberByYearStep] = useState(50);
+  const [numberByCompositionType, setNumberOfCompositionType] = useState('overall');
 
   const getTotalStrikes = () => {
     if (!meteoriteData) {
@@ -117,7 +118,7 @@ function SummaryMetric() {
     return numberOfStrikesByComposition;
   };
 
-  const getGroupedNumberOfStrikesByComposition = (numberOfStrikesByComposition) => {
+  const getGroupedNumberByComposition = (numberOfStrikesByComposition) => {
     if (!numberOfStrikesByComposition) {
       return null;
     }
@@ -126,13 +127,10 @@ function SummaryMetric() {
       Object.keys(compositionGroup).forEach((group) => {
         if (compositionGroup[group].includes(composition)) {
           if (groupedComposition[group]) {
-            groupedComposition[group].push(
-              { [composition]: numberOfStrikesByComposition[composition] },
-            );
+            groupedComposition[group][composition] = numberOfStrikesByComposition[composition];
           } else {
-            groupedComposition[group] = [
-              { [composition]: numberOfStrikesByComposition[composition] },
-            ];
+            groupedComposition[group] = {};
+            groupedComposition[group][composition] = numberOfStrikesByComposition[composition];
           }
         }
       });
@@ -142,11 +140,51 @@ function SummaryMetric() {
     return groupedComposition;
   };
 
+  const getNumberOfStrikesData = (groupedStrikes) => {
+    if (!groupedStrikes) {
+      return null;
+    }
+    switch (numberByCompositionType) {
+      case 'overall':
+        return Object.keys(groupedStrikes).reduce((acc, group) => {
+          const subGroup = groupedStrikes[group];
+          const subGroupTotal = Object.keys(subGroup).reduce((acc, curr) => {
+            const value = subGroup[curr];
+            return acc + value;
+          }, 0);
+          acc[group] = subGroupTotal;
+          return acc;
+        }, {});
+      case 'Carbonaceous chondrites':
+        return groupedStrikes['Carbonaceous chondrites'];
+      case 'Enstatite chondrites':
+        return groupedStrikes['Enstatite chondrites'];
+      case 'Ordinary chondrites':
+        return groupedStrikes['Ordinary chondrites'];
+      case 'Kakangari chondrites':
+        return groupedStrikes['Kakangari chondrites'];
+      case 'Primitive achondrites':
+        return groupedStrikes['Primitive achondrites'];
+      case 'Achondrites':
+        return groupedStrikes.Achondrites;
+      case 'Stony-iron':
+        return groupedStrikes['Stony-iron'];
+      case 'Iron':
+        return groupedStrikes.Iron;
+      case 'Unknown':
+        return groupedStrikes.Unknown;
+      default:
+        return null;
+    }
+  };
+
   const total = getTotalStrikes();
   const average = getAverageMass()?.toFixed(2);
-  const numberOfStrikesByYear = getNumberOfStrikesByYear(numberByYearStep);
-  const numberOfStrikesByComposition = getNumberOfStrikesByComposition();
-  const groupedNumberOfStrikesByComposition = getGroupedNumberOfStrikesByComposition(numberOfStrikesByComposition);
+  const numberByYear = getNumberOfStrikesByYear(numberByYearStep);
+  const numberByComposition = getNumberOfStrikesByComposition();
+  const groupedNumberByComposition = getGroupedNumberByComposition(numberByComposition);
+  const numberOfStrikesData = getNumberOfStrikesData(groupedNumberByComposition);
+
   return (
     <div className="summaryContainer">
       <h1>Summary</h1>
@@ -182,17 +220,28 @@ function SummaryMetric() {
         <option value="50">50</option>
         <option value="100">100</option>
       </select>
+      <select
+        className="numberOfCompositionType"
+        aria-label="choose a composition type"
+        name="CompositionType"
+        id="CompositionType"
+        onChange={(e) => setNumberOfCompositionType(e.target.value)}
+      >
+        <option value="overall">Overall</option>
+        {Object.keys(compositionGroup).map((group) => (
+          <option key={group} value={group}>{group}</option>))}
+      </select>
       <div className="chartContainer">
         <div className="leftArrow" />
         <div className="chart">
           <NumberOfStrikesChart
             label="Total number of strikes by year"
-            dataObject={numberOfStrikesByYear}
+            dataObject={numberByYear}
             type="bar"
           />
           <NumberOfStrikesChart
             label="Total number of strikes by composition"
-            dataObject={numberOfStrikesByComposition}
+            dataObject={numberOfStrikesData}
             type="pie"
           />
         </div>
