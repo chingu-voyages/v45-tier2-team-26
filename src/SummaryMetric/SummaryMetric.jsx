@@ -7,7 +7,7 @@ function SummaryMetric() {
   // The state is for testing purposes only. It will be replaced by props later.
   const [meteoriteData, setMeteoriteData] = useState(null);
   useEffect(() => {
-    getMeteoriteData().then((data) => setMeteoriteData(data));
+    getMeteoriteData().then((data) => setMeteoriteData([data[0]]));
   }, []);
   console.log('meteoriteData', meteoriteData);
 
@@ -21,6 +21,14 @@ function SummaryMetric() {
   const getAverageMass = () => {
     if (!meteoriteData) {
       return null;
+    }
+
+    if (meteoriteData.length === 1) {
+      const average = Number(meteoriteData[0].mass);
+      if (Number.isNaN(average)) {
+        return null;
+      }
+      return average;
     }
 
     console.log(
