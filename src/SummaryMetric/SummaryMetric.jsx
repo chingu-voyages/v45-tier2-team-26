@@ -2,12 +2,13 @@ import './SummaryMetric.css';
 import { useState, useEffect, useMemo } from 'react';
 import getMeteoriteData from '../services/publicAPI';
 import NumberOfStrikesChart from './NumberOfStrikesChart';
+import compositionGroup from './compositionGroup';
 
 function SummaryMetric() {
   // This state is for testing purposes only. It will be replaced by props later.
   const [meteoriteData, setMeteoriteData] = useState(null);
   useEffect(() => {
-    getMeteoriteData().then((data) => setMeteoriteData(data));
+    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 100)));
   }, []);
   console.log('meteoriteData', meteoriteData);
 
@@ -113,15 +114,39 @@ function SummaryMetric() {
       }
     });
 
-    console.log('number of strikes by composition', numberOfStrikesByComposition);
     return numberOfStrikesByComposition;
+  };
+
+  const getGroupedNumberOfStrikesByComposition = (numberOfStrikesByComposition) => {
+    if (!numberOfStrikesByComposition) {
+      return null;
+    }
+    const groupedComposition = {};
+    Object.keys(numberOfStrikesByComposition).forEach((composition) => {
+      Object.keys(compositionGroup).forEach((group) => {
+        if (compositionGroup[group].includes(composition)) {
+          if (groupedComposition[group]) {
+            groupedComposition[group].push(
+              { [composition]: numberOfStrikesByComposition[composition] },
+            );
+          } else {
+            groupedComposition[group] = [
+              { [composition]: numberOfStrikesByComposition[composition] },
+            ];
+          }
+        }
+      });
+    });
+    console.log('number of strikes by composition', numberOfStrikesByComposition);
+    console.log('grouped composition', groupedComposition);
+    return groupedComposition;
   };
 
   const total = getTotalStrikes();
   const average = getAverageMass()?.toFixed(2);
   const numberOfStrikesByYear = getNumberOfStrikesByYear(numberByYearStep);
   const numberOfStrikesByComposition = getNumberOfStrikesByComposition();
-
+  const groupedNumberOfStrikesByComposition = getGroupedNumberOfStrikesByComposition(numberOfStrikesByComposition);
   return (
     <div className="summaryContainer">
       <h1>Summary</h1>
