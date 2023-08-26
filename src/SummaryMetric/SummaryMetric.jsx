@@ -4,12 +4,14 @@ import getMeteoriteData from '../services/publicAPI';
 import NumberOfStrikesChart from './NumberOfStrikesChart';
 
 function SummaryMetric() {
-  // The state is for testing purposes only. It will be replaced by props later.
+  // This state is for testing purposes only. It will be replaced by props later.
   const [meteoriteData, setMeteoriteData] = useState(null);
   useEffect(() => {
-    getMeteoriteData().then((data) => setMeteoriteData([data[0]]));
+    getMeteoriteData().then((data) => setMeteoriteData(data));
   }, []);
   console.log('meteoriteData', meteoriteData);
+
+  const [numberByYearStep, setNumberByYearStep] = useState(50);
 
   const getTotalStrikes = () => {
     if (!meteoriteData) {
@@ -34,15 +36,15 @@ function SummaryMetric() {
     console.log(
       'meteorite data with invalid mass',
       meteoriteData.filter(
-        (data) => !(data.mass && !Number.isNaN(Number(data.mass))),
+        (data) => !(data.mass && !Number.isNaN(Number(data.mass) && Number(data.mass) > 0)),
       ),
     );
 
     const dataWithValidMass = meteoriteData.filter(
-      (data) => data.mass && !Number.isNaN(Number(data.mass)),
+      (data) => data.mass && !Number.isNaN(Number(data.mass)) && Number(data.mass) > 0,
     );
     const totalMass = dataWithValidMass.reduce(
-      (acc, curr) => acc + (curr.mass ? Number(curr.mass) : 0),
+      (acc, curr) => acc + Number(curr.mass),
       0,
     );
     return totalMass / dataWithValidMass.length;
@@ -117,7 +119,7 @@ function SummaryMetric() {
 
   const total = getTotalStrikes();
   const average = getAverageMass()?.toFixed(2);
-  const numberOfStrikesByYear = getNumberOfStrikesByYear(50);
+  const numberOfStrikesByYear = getNumberOfStrikesByYear(numberByYearStep);
   const numberOfStrikesByComposition = getNumberOfStrikesByComposition();
 
   return (
@@ -142,6 +144,18 @@ function SummaryMetric() {
         </option>
         <option value="value2">value2</option>
         <option value="value3">value3</option>
+      </select>
+      <select
+        className="numberByYearStep"
+        aria-label="choose a step"
+        name="Step"
+        id="Step"
+        onChange={(e) => setNumberByYearStep(Number(e.target.value))}
+      >
+        <option value="10">10</option>
+        <option selected value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
       </select>
       <div className="chartContainer">
         <div className="leftArrow" />

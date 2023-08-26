@@ -19,7 +19,7 @@
   border-radius: 10px;
 }
 
-.chartTitle {
+.chartTitle, .numberByYearStep {
   width: 150px;
   text-align: center;
   align-self: center;
