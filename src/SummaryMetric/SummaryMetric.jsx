@@ -74,8 +74,8 @@ function SummaryMetric() {
 
     const firstYear = parseYear(dataWithValidYear[0].year);
     const lastYear = parseYear(dataWithValidYear[dataWithValidYear.length - 1].year);
-    const startingInterval = Math.floor(firstYear / 100) * 100;
-    const endingInterval = Math.ceil(lastYear / 100) * 100;
+    const startingInterval = Math.floor(firstYear / step) * step;
+    const endingInterval = Math.floor(lastYear / step) * step;
     const numberOfStrikesByYear = {};
     for (let i = startingInterval; i <= endingInterval; i += step) {
       const yearStart = i;
