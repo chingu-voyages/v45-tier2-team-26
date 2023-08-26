@@ -7,6 +7,7 @@ function SummaryMetric() {
       <p>Total number of strikes: [number]</p>
       <p>Average mass: [number]</p>
       <select
+        className="chartTitle"
         aria-label="choose a chart title"
         name="ChartTitle"
         id="ChartTitle"
@@ -17,9 +18,11 @@ function SummaryMetric() {
         <option value="value2">value2</option>
         <option value="value3">value3</option>
       </select>
-      <div className="previous" />
-      <div className="chart" />
-      <div className="next" />
+      <div className="chartContainer">
+        <div className="leftArrow" />
+        <div className="chart" />
+        <div className="rightArrow" />
+      </div>
     </div>
   );
 }
