@@ -8,7 +8,7 @@ function SummaryMetric() {
   // This state is for testing purposes only. It will be replaced by props later.
   const [meteoriteData, setMeteoriteData] = useState(null);
   useEffect(() => {
-    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 1000)));
+    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 100)));
   }, []);
   console.log('meteoriteData', meteoriteData);
 
@@ -178,12 +178,21 @@ function SummaryMetric() {
     }
   };
 
-  const total = getTotalStrikes();
-  const average = getAverageMass()?.toFixed(2);
-  const numberByYear = getNumberOfStrikesByYear(numberByYearStep);
-  const numberByComposition = getNumberOfStrikesByComposition();
-  const groupedNumberByComposition = getGroupedNumberByComposition(numberByComposition);
-  const numberOfStrikesData = getNumberOfStrikesData(groupedNumberByComposition);
+  const total = useMemo(() => getTotalStrikes(), [meteoriteData]);
+  const average = useMemo(() => getAverageMass()?.toFixed(2), [meteoriteData]);
+  const numberByYear = useMemo(
+    () => getNumberOfStrikesByYear(numberByYearStep),
+    [meteoriteData, numberByYearStep],
+  );
+  const numberByComposition = useMemo(() => getNumberOfStrikesByComposition(), [meteoriteData]);
+  const groupedNumberByComposition = useMemo(
+    () => getGroupedNumberByComposition(numberByComposition),
+    [numberByComposition],
+  );
+  const numberOfStrikesData = useMemo(
+    () => getNumberOfStrikesData(groupedNumberByComposition),
+    [groupedNumberByComposition, numberByCompositionType],
+  );
 
   return (
     <div className="summaryContainer">
