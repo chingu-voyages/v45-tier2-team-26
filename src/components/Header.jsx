@@ -6,6 +6,26 @@ export default function Header() {
   const handleSliderChange = (e) => {
     setSliderValue(e.target.value);
   };
+
+  const [name, setName] = useState('');
+  // Possibly add debouncer later to improve performance
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleSearch = () => {
+    // Takes query at Name box and searches through JSON file for matches
+    setName(name);
+    console.log(`Name entered: ${name}`);
+  };
+
+  const handleClear = () => {
+    // Clears all search fields
+    // Current small bug: need to click Clear twice to have variable name=''
+    setName('');
+    console.log(`Name entered: ${name}`);
+  };
+
   return (
     <header>
       <section className="logo">
@@ -16,7 +36,12 @@ export default function Header() {
         <section className="columnGroup">
           <div className="fieldGroup" id="name">
             <label htmlFor="">Name:</label>
-            <input type="text" placeholder="e.g. Acapulco" />
+            <input
+              type="text"
+              placeholder="e.g. Acapulco"
+              onChange={handleNameChange}
+              value={name}
+            />
           </div>
           <div className="fieldGroup" id="year">
             <label htmlFor="">Year:</label>
@@ -47,10 +72,10 @@ export default function Header() {
       </section>
 
       <section className="headerBtns">
-        <button type="button" className="searchBtn">
+        <button type="button" className="searchBtn" onClick={handleSearch}>
           Search
         </button>
-        <button type="button" className="clearBtn">
+        <button type="button" className="clearBtn" onClick={handleClear}>
           Clear
         </button>
       </section>
