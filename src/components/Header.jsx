@@ -16,14 +16,14 @@ export default function Header() {
   const handleSearch = () => {
     // Takes query at Name box and searches through JSON file for matches
     setName(name);
-    console.log(`Name entered: ${name}`);
+    console.log(`Query entered: ${name}`);
   };
 
   const handleClear = () => {
     // Clears all search fields
     // Current small bug: need to click Clear twice to have variable name=''
     setName('');
-    console.log(`Name entered: ${name}`);
+    console.log(`Clear clicked! name = ${name}`);
   };
 
   return (
