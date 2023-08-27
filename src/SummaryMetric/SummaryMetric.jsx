@@ -1,14 +1,14 @@
 import './SummaryMetric.css';
 import { useState, useEffect, useMemo } from 'react';
 import getMeteoriteData from '../services/publicAPI';
-import NumberOfStrikesChart from './NumberOfStrikesChart';
+import DataChart from './DataChart';
 import compositionGroup from './compositionGroup';
 
 function SummaryMetric() {
   // This state is for testing purposes only. It will be replaced by props later.
   const [meteoriteData, setMeteoriteData] = useState(null);
   useEffect(() => {
-    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 100)));
+    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 1000)));
   }, []);
   console.log('meteoriteData', meteoriteData);
 
@@ -23,7 +23,7 @@ function SummaryMetric() {
   };
 
   const getAverageMass = () => {
-    if (!meteoriteData) {
+    if (!meteoriteData || meteoriteData?.length === 0) {
       return null;
     }
 
@@ -180,7 +180,7 @@ function SummaryMetric() {
 
   const total = useMemo(() => getTotalStrikes(), [meteoriteData]);
   const average = useMemo(() => getAverageMass()?.toFixed(2), [meteoriteData]);
-  const numberByYear = useMemo(
+  const numberByYearChartData = useMemo(
     () => getNumberOfStrikesByYear(numberByYearStep),
     [meteoriteData, numberByYearStep],
   );
@@ -189,7 +189,7 @@ function SummaryMetric() {
     () => getGroupedNumberByComposition(numberByComposition),
     [numberByComposition],
   );
-  const numberOfStrikesData = useMemo(
+  const numberByCompositionChartData = useMemo(
     () => getNumberOfStrikesData(groupedNumberByComposition),
     [groupedNumberByComposition, numberByCompositionType],
   );
@@ -243,15 +243,17 @@ function SummaryMetric() {
       <div className="chartContainer">
         <div className="leftArrow" />
         <div className="chart">
-          <NumberOfStrikesChart
+          <DataChart
             label="Total number of strikes by year"
-            dataObject={numberByYear}
+            dataObject={numberByYearChartData}
             type="bar"
+            xLabel="Year"
+            yLabel="Number of strikes"
           />
-          <NumberOfStrikesChart
+          <DataChart
             label="Total number of strikes by composition"
-            dataObject={numberOfStrikesData}
-            type="pie"
+            dataObject={numberByCompositionChartData}
+            type="doughnut"
           />
         </div>
         <div className="rightArrow" />
