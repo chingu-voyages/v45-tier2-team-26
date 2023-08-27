@@ -9,11 +9,12 @@ function SummaryMetric() {
   const [meteoriteData, setMeteoriteData] = useState(null);
   const [switchChart, setSwishChart] = useState(0);
   useEffect(() => {
+    console.log('testing');
     getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 1000)));
   }, []);
 
-  const changeChart = () => {
-    setSwishChart(switchChart + 1);
+  const changeChart = (index) => {
+    setSwishChart(switchChart + index);
   };
 
   const [numberByYearStep, setNumberByYearStep] = useState(50);
@@ -103,13 +104,10 @@ function SummaryMetric() {
     if (!meteoriteData) {
       return null;
     }
+
     const dataWithValidComposition = meteoriteData.filter(
       (data) => data.recclass,
     );
-    // console.log('meteorite data with invalid composition', meteoriteData.filter(
-    //   (data) => !(data.recclass),
-    // ));
-
     const numberOfStrikesByComposition = {};
     dataWithValidComposition.forEach((data) => {
       if (numberOfStrikesByComposition[data.recclass]) {
@@ -149,6 +147,9 @@ function SummaryMetric() {
     if (!groupedStrikes) {
       return null;
     }
+
+    console.log('test', numberByCompositionType);
+
     switch (numberByCompositionType) {
       case 'overall':
         return Object.keys(groupedStrikes).reduce((acc, group) => {
@@ -234,7 +235,7 @@ function SummaryMetric() {
           <option key={group} value={group}>{group}</option>))}
       </select>
       <div className="chartContainer">
-        <div onClick={() => changeChart()} className="leftArrow" />
+        <div onClick={() => changeChart(-1)} className="leftArrow" />
         <div className="chart">
           {
             switchChart % 2 === 0 ? (
@@ -254,7 +255,7 @@ function SummaryMetric() {
             )
           }
         </div>
-        <div onClick={() => changeChart()} className="rightArrow" />
+        <div onClick={() => changeChart(1)} className="rightArrow" />
       </div>
     </div>
   );
