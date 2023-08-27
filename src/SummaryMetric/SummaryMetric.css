@@ -1,0 +1,61 @@
+.summaryContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px 0;
+}
+
+.chartContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0 10px;
+}
+
+.chart {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.numberOfCompositionType,
+.numberByYearStep {
+  width: 150px;
+  align-self: center;
+  overflow: hidden;
+}
+
+/* svgs */
+
+.leftArrow {
+  --un-icon: url("data:image/svg+xml;utf8,%3Csvg viewBox='0 0 24 24' width='1.2em' height='1.2em' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath fill='currentColor' d='M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6l6 6l1.41-1.41z'/%3E%3C/svg%3E");
+}
+
+.rightArrow {
+  --un-icon: url("data:image/svg+xml;utf8,%3Csvg viewBox='0 0 24 24' width='1.2em' height='1.2em' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath fill='currentColor' d='M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6l-6 6l-1.41-1.41z'/%3E%3C/svg%3E");
+}
+
+.leftArrow,
+.rightArrow {
+  -webkit-mask: var(--un-icon) no-repeat;
+  mask: var(--un-icon) no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  background-color: currentColor;
+  color: inherit;
+  width: 3em;
+  height: 3em;
+  transition: 300ms ease transform;
+  overflow: hidden;
+}
+
+.leftArrow:hover,
+.rightArrow:hover {
+  transform: scale(1.5);
+  cursor: pointer;
+}
