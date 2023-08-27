@@ -7,10 +7,14 @@ import compositionGroup from './compositionGroup';
 function SummaryMetric() {
   // This state is for testing purposes only. It will be replaced by props later.
   const [meteoriteData, setMeteoriteData] = useState(null);
+  const [switchChart, setSwishChart] = useState(0);
   useEffect(() => {
     getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 1000)));
   }, []);
-  console.log('meteoriteData', meteoriteData);
+
+  const changeChart = () => {
+    setSwishChart(switchChart + 1);
+  };
 
   const [numberByYearStep, setNumberByYearStep] = useState(50);
   const [numberByCompositionType, setNumberOfCompositionType] = useState('overall');
@@ -35,12 +39,12 @@ function SummaryMetric() {
       return average;
     }
 
-    console.log(
-      'meteorite data with invalid mass',
-      meteoriteData.filter(
-        (data) => !(data.mass && !Number.isNaN(Number(data.mass) && Number(data.mass) > 0)),
-      ),
-    );
+    // console.log(
+    //   'meteorite data with invalid mass',
+    //   meteoriteData.filter(
+    //     (data) => !(data.mass && !Number.isNaN(Number(data.mass) && Number(data.mass) > 0)),
+    //   ),
+    // );
 
     const dataWithValidMass = meteoriteData.filter(
       (data) => data.mass && !Number.isNaN(Number(data.mass)) && Number(data.mass) > 0,
@@ -70,9 +74,9 @@ function SummaryMetric() {
     const dataWithValidYear = meteoriteData.filter(
       (data) => data.year && !Number.isNaN(Date.parse(data.year)),
     );
-    console.log('meteorite data with invalid year', meteoriteData.filter(
-      (data) => !(data.year && !Number.isNaN(Date.parse(data.year))),
-    ));
+    // console.log('meteorite data with invalid year', meteoriteData.filter(
+    //   (data) => !(data.year && !Number.isNaN(Date.parse(data.year))),
+    // ));
 
     dataWithValidYear.sort((a, b) => (Date.parse(a.year) - Date.parse(b.year)));
 
@@ -91,7 +95,7 @@ function SummaryMetric() {
       numberOfStrikesByYear[`${yearStart}-${yearEnd}`] = strikesInInterval;
     }
 
-    console.log('number of strikes by year', numberOfStrikesByYear);
+    // console.log('number of strikes by year', numberOfStrikesByYear);
     return numberOfStrikesByYear;
   };
 
@@ -102,9 +106,9 @@ function SummaryMetric() {
     const dataWithValidComposition = meteoriteData.filter(
       (data) => data.recclass,
     );
-    console.log('meteorite data with invalid composition', meteoriteData.filter(
-      (data) => !(data.recclass),
-    ));
+    // console.log('meteorite data with invalid composition', meteoriteData.filter(
+    //   (data) => !(data.recclass),
+    // ));
 
     const numberOfStrikesByComposition = {};
     dataWithValidComposition.forEach((data) => {
@@ -122,6 +126,7 @@ function SummaryMetric() {
     if (!numberOfStrikesByComposition) {
       return null;
     }
+
     const groupedComposition = {};
     Object.keys(numberOfStrikesByComposition).forEach((composition) => {
       Object.keys(compositionGroup).forEach((group) => {
@@ -135,8 +140,8 @@ function SummaryMetric() {
         }
       });
     });
-    console.log('number of strikes by composition', numberOfStrikesByComposition);
-    console.log('grouped composition', groupedComposition);
+    // console.log('number of strikes by composition', numberOfStrikesByComposition);
+    // console.log('grouped composition', groupedComposition);
     return groupedComposition;
   };
 
@@ -206,18 +211,6 @@ function SummaryMetric() {
         {average}
       </p>
       <select
-        className="chartTitle"
-        aria-label="choose a chart title"
-        name="ChartTitle"
-        id="ChartTitle"
-      >
-        <option selected value="value1">
-          value1
-        </option>
-        <option value="value2">value2</option>
-        <option value="value3">value3</option>
-      </select>
-      <select
         className="numberByYearStep"
         aria-label="choose a step"
         name="Step"
@@ -225,7 +218,7 @@ function SummaryMetric() {
         onChange={(e) => setNumberByYearStep(Number(e.target.value))}
       >
         <option value="10">10</option>
-        <option selected value="20">20</option>
+        <option defaultValue value="20">20</option>
         <option value="50">50</option>
         <option value="100">100</option>
       </select>
@@ -241,22 +234,27 @@ function SummaryMetric() {
           <option key={group} value={group}>{group}</option>))}
       </select>
       <div className="chartContainer">
-        <div className="leftArrow" />
+        <div onClick={() => changeChart()} className="leftArrow" />
         <div className="chart">
-          <DataChart
-            label="Total number of strikes by year"
-            dataObject={numberByYearChartData}
-            type="bar"
-            xLabel="Year"
-            yLabel="Number of strikes"
-          />
-          <DataChart
-            label="Total number of strikes by composition"
-            dataObject={numberByCompositionChartData}
-            type="doughnut"
-          />
+          {
+            switchChart % 2 === 0 ? (
+              <DataChart
+                label="Total number of strikes by year"
+                dataObject={numberByYearChartData}
+                type="bar"
+                xLabel="Year"
+                yLabel="Number of strikes"
+              />
+            ) : (
+              <DataChart
+                label="Total number of strikes by composition"
+                dataObject={numberByCompositionChartData}
+                type="doughnut"
+              />
+            )
+          }
         </div>
-        <div className="rightArrow" />
+        <div onClick={() => changeChart()} className="rightArrow" />
       </div>
     </div>
   );
