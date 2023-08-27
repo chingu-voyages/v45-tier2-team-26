@@ -14,15 +14,20 @@
 
 .chart {
   width: 100%;
-  height: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 2px solid black;
   border-radius: 10px;
+  overflow: hidden;
 }
 
-.chartTitle {
+.numberOfCompositionType,
+.numberByYearStep {
   width: 150px;
-  text-align: center;
   align-self: center;
+  overflow: hidden;
 }
 
 /* svgs */
@@ -46,6 +51,7 @@
   width: 3em;
   height: 3em;
   transition: 300ms ease transform;
+  overflow: hidden;
 }
 
 .leftArrow:hover,
