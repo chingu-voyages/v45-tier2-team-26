@@ -1,5 +1,5 @@
-import SummaryMetric from './SummaryMetric/SummaryMetric';
-import Header from './components/Header';
+import SummaryMetric from './components/SummaryMetric/SummaryMetric';
+import Header from './components/Header/Header';
 
 function App() {
   return (
