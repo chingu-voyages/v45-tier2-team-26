@@ -1,9 +1,10 @@
-import SummaryMetric from './SummaryMetric/SummaryMetric';
-import './App.css';
+import SummaryMetric from './components/SummaryMetric/SummaryMetric';
+import Header from './components/Header/Header';
 
 function App() {
   return (
     <div className="App">
+      <Header />
       <SummaryMetric />
     </div>
   );

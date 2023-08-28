@@ -1,6 +1,6 @@
 import './SummaryMetric.css';
 import { useState, useEffect, useMemo } from 'react';
-import getMeteoriteData from '../services/publicAPI';
+import getMeteoriteData from '../../services/publicAPI';
 import DataChart from './DataChart';
 import compositionGroup from './compositionGroup';
 

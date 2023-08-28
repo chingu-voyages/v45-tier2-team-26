@@ -1,0 +1,78 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1em 2em;
+    box-shadow: 0px 3px 9px rgb(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+.inputFields {
+    display: flex;
+    gap: 4em;
+}
+
+input {
+    padding: 0.2em;
+}
+
+label {
+    font-weight: 800;
+    font-size: 1.2rem;
+    width: 100%;
+}
+
+
+.columnGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+}
+
+.fieldGroup {
+    display: flex;
+    gap: 0.5em;
+    justify-content: center;
+}
+
+
+
+.headerBtns {
+    display: flex;
+    gap: 2em;
+}
+
+button {
+    border: none;
+    border-radius: 0.3em;
+    padding: 0.5em 2em;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0px 3px 9px rgb(0, 0, 0, 0.2);
+}
+
+.searchBtn {
+    background: lightblue;
+}
+
+.clearBtn {
+    background: lightcoral;
+}
+
+.rangeSlider {
+    cursor: pointer;
+}
+
+.sliderGroup {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-weight: 800;
+}
