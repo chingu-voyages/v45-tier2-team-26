@@ -5,6 +5,8 @@ import getDetailData from './getDetailData';
 
 function DetailData() {
   // This state is for testing purposes only. It will be replaced by props later.
+  const itemsPerPage = 10; // You can adjust this as needed
+  const [currentPage, setCurrentPage] = useState(1);
   const [meteorData, setMeteorData] = useState(null);
   const [locationsData, setLocationsData] = useState(null);
   const [detailData, setDetailData] = useState(null);
@@ -36,6 +38,14 @@ function DetailData() {
     }
   }, [locationsData]);
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = detailData ? detailData.slice(startIndex, endIndex) : [];
+
   return (
     <div>
       {detailData ? (
@@ -55,7 +65,7 @@ function DetailData() {
               </tr>
             </thead>
             <tbody>
-              {detailData.map((item) => (
+              {currentItems.map((item) => (
                 <tr key={item.id}>
                   <td>{item.name}</td>
                   <td>{item.id}</td>
@@ -69,6 +79,14 @@ function DetailData() {
               ))}
             </tbody>
           </table>
+          <div>
+            <button disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
+            <span>
+              Page
+              {currentPage}
+            </span>
+            <button disabled={endIndex >= detailData.length} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
+          </div>
         </div>
       ) : (<p>Content loading...</p>)}
     </div>
