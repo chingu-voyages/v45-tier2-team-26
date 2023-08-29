@@ -5,9 +5,9 @@ import DetailData from './components/DetailData/DetailData';
 function App() {
   return (
     <div className="App">
-      <Header />
+      {/* <Header /> */}
       <DetailData />
-      <SummaryMetric />
+      {/* <SummaryMetric /> */}
     </div>
   );
 }
