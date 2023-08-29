@@ -1,103 +1,71 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import getLocation from './getLocation';
-import getMeteoriteData from '../../services/publicAPI';
+import getMeteorData from '../../services/publicAPI';
+import getDetailData from './getDetailData';
 
 function DetailData() {
   // This state is for testing purposes only. It will be replaced by props later.
   const [meteorData, setMeteorData] = useState(null);
-  const locationData = useMemo(() => getLocation(meteorData), [meteorData]);
+  const [locationsData, setLocationsData] = useState(null);
+  const [detailData, setDetailData] = useState(null);
 
   useEffect(() => {
     console.log('testing');
-    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 1000)));
+    getMeteorData().then((data) => setMeteorData(data.slice(140, 160)));
+    console.log('meteor data set');
   }, []);
 
-  function locations(data) {
-    if (!data) {
-      return null;
+  useEffect(() => {
+    if (meteorData) {
+      const queryResponse = getLocation(meteorData);
+      setLocationsData(queryResponse.value);
+      console.log('location data set');
     }
-    return getLocation(data);
-  }
+  }, [meteorData]);
 
-  console.log(locations(meteorData));
-
-  // // fetch the meteor data and set it to meteorData state
-  // async function getMeteorData() {
-  //   try {
-  //     const response = await fetch('https://data.nasa.gov/resource/gh4g-9sfh.json');
-  //     let data = await response.json();
-  //     data = data.slice(0, -900);// Currently only reverse geocoding for the first 100 lat/lon pairs. There is an error happening because not all meteor strikes have a lat/lon. This exits the whole fetch request in getLocation. So maybe we need to subset latLongData to exclude NaNs? Then we can use locations.query.lon and locations.query.lat to match back up the locations to the original meteor data?
-
-  //     // Create lon/lat data formatted for batch reverse geocoding with the Geoapify API
-  //     const latLongData = data.map((meteor) => (
-  //       {
-  //         lon: parseFloat(meteor.reclong),
-  //         lat: parseFloat(meteor.reclat),
-  //       }
-  //     ));
-
-  //     // Fetch locations from the Geoapify API
-  //     const locations = await getLocation(latLongData);
-  //     console.log(locations);
-
-  //     // Create a map from locationData using latitude and longitude as the key
-  //     const locationMap = new Map();
-  //     locations.forEach((location) => {
-  //       const key = `${location.query.lon},${location.query.lat}`;
-  //       locationMap.set(key, { city: location.city, country: location.country });
-  //     });
-
-  //     // Update meteorData with location information
-  //     data.forEach((meteor) => {
-  //       const key = `${parseFloat(meteor.reclong)},${parseFloat(meteor.reclat)}`;
-  //       const location = locationMap.get(key);
-  //       if (location) {
-  //         meteor.geolocation = `${location.city}, ${location.country}`;
-  //       }
-  //     });
-
-  //     setFullMeteorData(data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  useEffect(() => {
+    if (locationsData) {
+      const updatedDetailData = getDetailData(meteorData, locationsData);
+      setDetailData(updatedDetailData);
+    }
+  }, [locationsData]);
 
   return (
     <div>
-      {/* {fullMeteorData.length
-        ? (
-          <div>
-            <h1>Detail Data</h1>
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>ID</th>
-                  <th>Composition</th>
-                  <th>Mass</th>
-                  <th>Year</th>
-                  <th>Latitude</th>
-                  <th>Longitude</th>
-                  <th>City, Country</th>
+      {detailData ? (
+        <div>
+          <h1>Detail Data</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Composition</th>
+                <th>Mass</th>
+                <th>Year</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>City, Country</th>
+              </tr>
+            </thead>
+            <tbody>
+              {detailData.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>{item.id}</td>
+                  <td>{item.recclass}</td>
+                  <td>{item.mass}</td>
+                  <td>{item.year}</td>
+                  <td>{item.reclat}</td>
+                  <td>{item.reclong}</td>
+                  <td>{item.geolocation}</td>
                 </tr>
-              </thead>
-              <tbody>
-                {fullMeteorData.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.name}</td>
-                    <td>{item.id}</td>
-                    <td>{item.recclass}</td>
-                    <td>{item.mass}</td>
-                    <td>{item.year}</td>
-                    <td>{item.reclat}</td>
-                    <td>{item.reclong}</td>
-                    <td>{item.geolocation}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : <p>Content loading...</p>} */}
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (<p>Content loading...</p>)
+      }
     </div>
   );
 }
