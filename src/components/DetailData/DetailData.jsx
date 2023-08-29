@@ -11,22 +11,28 @@ function DetailData() {
 
   useEffect(() => {
     console.log('testing');
-    getMeteorData().then((data) => setMeteorData(data.slice(140, 160)));
-    console.log('meteor data set');
+    async function fetchData() {
+      const data = await getMeteorData();
+      setMeteorData(data.slice(140, 160));
+    }
+    fetchData();
   }, []);
 
   useEffect(() => {
     if (meteorData) {
-      const queryResponse = getLocation(meteorData);
-      setLocationsData(queryResponse.value);
-      console.log('location data set');
+      console.log('meteor data updated');
+      async function fetchLocations() {
+        const locations = await getLocation(meteorData);
+        setLocationsData(locations);
+      }
+      fetchLocations();
     }
   }, [meteorData]);
 
   useEffect(() => {
     if (locationsData) {
-      const updatedDetailData = getDetailData(meteorData, locationsData);
-      setDetailData(updatedDetailData);
+      console.log('location data updated');
+      setDetailData(getDetailData(meteorData, locationsData));
     }
   }, [locationsData]);
 
@@ -56,16 +62,15 @@ function DetailData() {
                   <td>{item.recclass}</td>
                   <td>{item.mass}</td>
                   <td>{item.year}</td>
-                  <td>{item.reclat}</td>
-                  <td>{item.reclong}</td>
+                  <td>{parseFloat(item.reclat).toFixed(3)}</td>
+                  <td>{parseFloat(item.reclong).toFixed(3)}</td>
                   <td>{item.geolocation}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      ) : (<p>Content loading...</p>)
-      }
+      ) : (<p>Content loading...</p>)}
     </div>
   );
 }
