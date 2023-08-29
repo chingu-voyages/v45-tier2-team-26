@@ -1,4 +1,4 @@
-export default function getDetailData(meteorData, locations) {
+export default function getDetailData(meteors, locations) {
   // Create a map from locationData using latitude and longitude as the key
   const locationMap = new Map();
   locations.forEach((location) => {
@@ -6,16 +6,32 @@ export default function getDetailData(meteorData, locations) {
     locationMap.set(key, { city: location.city, country: location.country });
   });
 
-  // Update meteorData with location information. If no lat/lon data, indicate data is unavailable
-  meteorData.forEach((meteor) => {
-    if (meteor.reclong && meteor.reclat) {
-      meteor.gelocation = 'Data unavailable';
+  // Create a new array with updated meteor data
+  const updatedMeteors = meteors.map((meteor) => {
+    // Update meteor.year to only contain the first four digits
+    if (meteor.year) {
+      meteor.year = meteor.year.substring(0, 4);
+    }
+
+    // Add geolocation, the city and country based on lat and lon
+    if (!meteor.reclong || !meteor.reclat) {
+      meteor.geolocation = 'Data unavailable';
     } else {
       const key = `${parseFloat(meteor.reclong)},${parseFloat(meteor.reclat)}`;
       const location = locationMap.get(key);
       if (location) {
-        meteor.geolocation = `${location.city}, ${location.country}`;
+        if (location.city) {
+          meteor.geolocation = `${location.city}, ${location.country}`;
+        } else {
+          meteor.geolocation = `City unknown, ${location.country}`;
+        }
+      } else {
+        meteor.geolocation = 'Data unavailable';
       }
     }
+
+    return meteor; // Return the updated meteor object
   });
+
+  return updatedMeteors; // Return the updated array
 }
