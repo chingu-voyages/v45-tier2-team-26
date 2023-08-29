@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import getLocation from './getLocation';
+import getLocation from '../../getLocation';
 
 function DetailData() {
   const [didRender, setDidRender] = useState(false);
