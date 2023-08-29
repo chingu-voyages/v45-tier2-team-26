@@ -1,5 +1,15 @@
-export default async function getLocation(latLongData) {
+import getLatLon from './getLatLon';
+
+export default async function getLocation(meteorData) {
+  const latLongData = getLatLon(meteorData);
   const url = 'https://api.geoapify.com/v1/batch/geocode/reverse?apiKey=143adca609dd41258606ce840f8db559';
+
+  // Remove null entries from latLongData
+  const filteredLatLongData = latLongData.filter((entry) => entry !== null);
+
+  if (filteredLatLongData.length === 0) {
+    return null;
+  }
 
   try {
     const response = await fetch(url, {
@@ -7,7 +17,7 @@ export default async function getLocation(latLongData) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(latLongData),
+      body: JSON.stringify(filteredLatLongData),
     });
 
     const result = await getBodyAndStatus(response);
