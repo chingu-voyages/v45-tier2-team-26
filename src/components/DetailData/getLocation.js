@@ -26,11 +26,11 @@ export default async function getLocation(meteorData) {
       throw result;
     }
 
-    console.log(`Job ID: ${result.body.id}`);
-    console.log(`Job URL: ${result.body.url}`);
+    // console.log(`Job ID: ${result.body.id}`);
+    // console.log(`Job URL: ${result.body.url}`);
 
     const queryResult = await getAsyncResult(`${url}&id=${result.body.id}`, 1000, 100);
-    console.log(queryResult);
+    // console.log(queryResult);
     return queryResult;
   } catch (error) {
     console.error(error);
