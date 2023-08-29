@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import './App.css';
+import SummaryMetric from './components/SummaryMetric/SummaryMetric';
+import Header from './components/Header/Header';
 import DetailData from './DetailData';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <DetailData />
+    <div className="App">
+      <Header />
+      <SummaryMetric />
+    </div>
   );
 }
 
