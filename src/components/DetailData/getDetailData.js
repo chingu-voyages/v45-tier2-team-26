@@ -3,7 +3,7 @@ export default function getDetailData(meteors, locations) {
   const locationMap = new Map();
   locations.forEach((location) => {
     const key = `${location.query.lon},${location.query.lat}`;
-    locationMap.set(key, { city: location.city, country: location.country });
+    locationMap.set(key, { city: location.city, state: location.state, country: location.country });
   });
 
   // Create a new array with updated meteor data
@@ -20,10 +20,12 @@ export default function getDetailData(meteors, locations) {
       const key = `${parseFloat(meteor.reclong)},${parseFloat(meteor.reclat)}`;
       const location = locationMap.get(key);
       if (location) {
-        if (location.city) {
-          meteor.geolocation = `${location.city}, ${location.country}`;
-        } else {
-          meteor.geolocation = `City unknown, ${location.country}`;
+        if (location.state && location.city) {
+          meteor.geolocation = `${location.city}, ${location.state}, ${location.country}`;
+        } else if (location.state && !location.city) {
+          meteor.geolocation = `City unknown, ${location.state}, ${location.country}`;
+        } else if (!location.state){
+          meteor.geolocation = `State unknown, ${location.country}`;
         }
       } else {
         meteor.geolocation = 'Data unavailable';
