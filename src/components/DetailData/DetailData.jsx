@@ -6,13 +6,13 @@ import getDetailData from './getDetailData';
 function DetailData() {
   // This state is for testing purposes only. It will be replaced by props later.
   const itemsPerPage = 10; // You can adjust this as needed
-  const [currentPage, setCurrentPage] = useState(1);
   const [meteorData, setMeteorData] = useState(null);
-  const [locationsData, setLocationsData] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [endIndex, setEndIndex] = useState(null);
   const [detailData, setDetailData] = useState(null);
 
+  // Note - this might change - meteorData might be brought in via props
   useEffect(() => {
-    console.log('testing');
     async function fetchData() {
       const data = await getMeteorData();
       setMeteorData(data.slice(140, 155));
@@ -22,29 +22,40 @@ function DetailData() {
 
   useEffect(() => {
     if (meteorData) {
-      console.log('meteor data updated');
-      async function fetchLocations() {
-        const locations = await getLocation(meteorData);
-        setLocationsData(locations);
-      }
-      fetchLocations();
-    }
-  }, [meteorData]);
+      const [startIndex, currentEndIndex] = getIndices(currentPage);
 
-  useEffect(() => {
-    if (locationsData) {
-      console.log('location data updated');
-      setDetailData(getDetailData(meteorData, locationsData));
+      const meteorDataSubset = meteorData.slice(startIndex, currentEndIndex);
+
+      async function fetchDisplayData() {
+        const locations = await getLocation(meteorDataSubset);
+        setDetailData(getDetailData(meteorDataSubset, locations));
+      }
+      fetchDisplayData();
     }
-  }, [locationsData]);
+  }, [meteorData, currentPage]);
+
+  // useEffect(() => {
+  //   if (locationsData) {
+  //     console.log('location data updated');
+  //     setDetailData(getDetailData(meteorData, locationsData));
+  //   }
+  // }, [locationsData]);
 
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    const newPage = pageNumber;
+    setCurrentPage(newPage);
+    const [startIndex, newEndIndex] = getIndices(newPage);
+    setEndIndex(newEndIndex);
   };
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentItems = detailData ? detailData.slice(startIndex, endIndex) : [];
+  function getIndices(page) {
+    const startIndex = (page - 1) * itemsPerPage;
+
+    const newEndIndex = ((startIndex + itemsPerPage) > (meteorData.length - 1))
+      ? (meteorData.length - 1) : (startIndex + itemsPerPage);
+
+    return [startIndex, newEndIndex];
+  }
 
   return (
     <div>
@@ -65,7 +76,7 @@ function DetailData() {
               </tr>
             </thead>
             <tbody>
-              {currentItems.map((item) => (
+              {detailData.map((item) => (
                 <tr key={item.id}>
                   <td>{item.name}</td>
                   <td>{item.id}</td>
@@ -85,7 +96,7 @@ function DetailData() {
               Page
               {currentPage}
             </span>
-            <button disabled={endIndex >= detailData.length} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
+            <button disabled={endIndex >= meteorData.length - 1} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
           </div>
         </div>
       ) : (<p>Content loading...</p>)}
