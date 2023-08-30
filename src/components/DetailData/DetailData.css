@@ -1,0 +1,80 @@
+:root {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+.detailContainer {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px 0;
+  }
+
+  .tableContainer {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  td {
+    padding: 5px;
+  }
+  
+  thead {
+    background-color: #f2f2f2;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  tbody tr:hover {
+    background-color: #e0e0e0;
+  }
+  
+  /* Style the buttons for Previous and Next */
+  button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Center the page number span */
+  span {
+    display: inline-block;
+    margin: 0 10px;
+    font-weight: bold;
+  }
+  
