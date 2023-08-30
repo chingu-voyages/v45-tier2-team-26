@@ -15,7 +15,7 @@ function DetailData() {
     console.log('testing');
     async function fetchData() {
       const data = await getMeteorData();
-      setMeteorData(data.slice(140, 160));
+      setMeteorData(data.slice(140, 155));
     }
     fetchData();
   }, []);
@@ -61,7 +61,7 @@ function DetailData() {
                 <th>Year</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
-                <th>City, Country</th>
+                <th>City, State, Country</th>
               </tr>
             </thead>
             <tbody>
