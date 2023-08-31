@@ -24,7 +24,7 @@ export default function getDetailData(meteors, locations) {
           meteor.geolocation = `${location.city}, ${location.state}, ${location.country}`;
         } else if (location.state && !location.city) {
           meteor.geolocation = `City unknown, ${location.state}, ${location.country}`;
-        } else if (!location.state){
+        } else if (!location.state) {
           meteor.geolocation = `State unknown, ${location.country}`;
         }
       } else {
