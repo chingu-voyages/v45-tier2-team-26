@@ -1,5 +1,16 @@
 import { useState } from 'react';
 import './header.css';
+import Fuse from 'fuse.js';
+import getMeteoriteData from '../../services/publicAPI';
+
+async function loadData() {
+  const response = await fetch('https://data.nasa.gov/resource/gh4g-9sfh.json');
+  const names = await response.json();
+
+  return names;
+  // console.log(names);
+  // logs [{ name: 'Joker'}, { name: 'Batman' }]
+}
 
 export default function Header() {
   const [sliderValue, setSliderValue] = useState(50);
@@ -16,7 +27,17 @@ export default function Header() {
   const handleSearch = () => {
     // Takes query at Name box and searches through JSON file for matches
     setName(name);
-    console.log(`Query entered: ${name}`);
+
+    // const meteoriteData = getMeteoriteData;
+
+    // const fuse = new Fuse(meteoriteData, {
+    //   keys: ['name'],
+    //   limit: 10,
+    // });
+    // const filteredData = fuse.search(name);
+    const filteredData = loadData().json;
+
+    console.log(`Query entered: ${name}\nData found:\n ${filteredData}\nDone!`);
   };
 
   const handleClear = () => {
