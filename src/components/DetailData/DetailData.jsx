@@ -2,6 +2,7 @@ import './DetailData.css';
 import React, { useState, useEffect } from 'react';
 import getMeteorData from '../../services/publicAPI';
 import getLocation from './getLocation';
+import fetchLocation from './fetchLocation';
 import getDetailData from './getDetailData';
 
 function DetailData() {
@@ -24,15 +25,16 @@ function DetailData() {
 
   useEffect(() => {
     if (meteorData) {
-      const [startIndex, currentEndIndex] = getIndices(currentPage);
+      console.log(fetchLocation());
+      // const [startIndex, currentEndIndex] = getIndices(currentPage);
 
-      const meteorDataSubset = meteorData.slice(startIndex, currentEndIndex);
+      // const meteorDataSubset = meteorData.slice(startIndex, currentEndIndex);
 
-      async function fetchDisplayData() {
-        const locations = await getLocation(meteorDataSubset);
-        setDetailData(getDetailData(meteorDataSubset, locations));
-      }
-      fetchDisplayData();
+      // async function fetchDisplayData() {
+      //   const locations = await getLocation(meteorDataSubset);
+      //   setDetailData(getDetailData(meteorDataSubset, locations));
+      // }
+      // fetchDisplayData();
     }
   }, [meteorData, currentPage]);
 
