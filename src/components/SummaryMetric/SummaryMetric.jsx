@@ -10,7 +10,7 @@ function SummaryMetric() {
   const [switchChart, setSwishChart] = useState(0);
   useEffect(() => {
     console.log('testing');
-    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 1000)));
+    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0)));
   }, []);
 
   const changeChart = (index) => {
@@ -33,56 +33,56 @@ function SummaryMetric() {
     }
 
     if (meteoriteData.length === 1) {
-      const average = Number(meteoriteData[0].mass);
+      const average = Number(meteoriteData[0]['mass (g)']);
       if (Number.isNaN(average)) {
         return null;
       }
       return average;
     }
 
-    // console.log(
-    //   'meteorite data with invalid mass',
-    //   meteoriteData.filter(
-    //     (data) => !(data.mass && !Number.isNaN(Number(data.mass) && Number(data.mass) > 0)),
-    //   ),
-    // );
+    console.log(
+      'meteorite data with invalid mass',
+      meteoriteData.filter(
+        (data) => !(data['mass (g)'] && !Number.isNaN(Number(data['mass (g)']) && Number(data['mass (g)']) > 0)),
+      ),
+    );
 
     const dataWithValidMass = meteoriteData.filter(
-      (data) => data.mass && !Number.isNaN(Number(data.mass)) && Number(data.mass) > 0,
+      (data) => data['mass (g)'] && !Number.isNaN(Number(data['mass (g)'])) && Number(data['mass (g)']) > 0,
     );
     const totalMass = dataWithValidMass.reduce(
-      (acc, curr) => acc + Number(curr.mass),
+      (acc, curr) => acc + Number(curr['mass (g)']),
       0,
     );
     return totalMass / dataWithValidMass.length;
   };
 
-  const parseYear = (year) => {
-    if (!year) {
-      return null;
-    }
-    const parsedYear = Number(year.slice(0, 4));
-    if (Number.isNaN(parsedYear)) {
-      return null;
-    }
-    return parsedYear;
-  };
+  // const parseYear = (year) => {
+  //   if (!year) {
+  //     return null;
+  //   }
+  //   const parsedYear = Number(year.slice(0, 4));
+  //   if (Number.isNaN(parsedYear)) {
+  //     return null;
+  //   }
+  //   return parsedYear;
+  // };
 
   const getNumberOfStrikesByYear = (step) => {
     if (!meteoriteData) {
       return null;
     }
     const dataWithValidYear = meteoriteData.filter(
-      (data) => data.year && !Number.isNaN(Date.parse(data.year)),
+      (data) => data.year && !Number.isNaN(data.year),
     );
-    // console.log('meteorite data with invalid year', meteoriteData.filter(
-    //   (data) => !(data.year && !Number.isNaN(Date.parse(data.year))),
-    // ));
+    console.log('meteorite data with invalid year', meteoriteData.filter(
+      (data) => !(data.year && !Number.isNaN(data.year)),
+    ));
 
-    dataWithValidYear.sort((a, b) => (Date.parse(a.year) - Date.parse(b.year)));
+    dataWithValidYear.sort((a, b) => Number(a.year) - Number(b.year));
 
-    const firstYear = parseYear(dataWithValidYear[0].year);
-    const lastYear = parseYear(dataWithValidYear[dataWithValidYear.length - 1].year);
+    const firstYear = Number(dataWithValidYear[0].year);
+    const lastYear = Number(dataWithValidYear[dataWithValidYear.length - 1].year);
     const startingInterval = Math.floor(firstYear / step) * step;
     const endingInterval = Math.floor(lastYear / step) * step;
     const numberOfStrikesByYear = {};
@@ -90,7 +90,7 @@ function SummaryMetric() {
       const yearStart = i;
       const yearEnd = i + step - 1;
       const strikesInInterval = dataWithValidYear.filter((data) => {
-        const year = parseYear(data.year);
+        const year = Number(data.year);
         return year >= yearStart && year <= yearEnd;
       }).length;
       numberOfStrikesByYear[`${yearStart}-${yearEnd}`] = strikesInInterval;
@@ -138,8 +138,8 @@ function SummaryMetric() {
         }
       });
     });
-    // console.log('number of strikes by composition', numberOfStrikesByComposition);
-    // console.log('grouped composition', groupedComposition);
+    console.log('number of strikes by composition', numberOfStrikesByComposition);
+    console.log('grouped composition', groupedComposition);
     return groupedComposition;
   };
 

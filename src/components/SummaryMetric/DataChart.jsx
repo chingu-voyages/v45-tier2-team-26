@@ -21,7 +21,7 @@ function DataChart({
     ],
   };
 
-  console.log('labels', data.labels);
+  // console.log('labels', data.labels);
 
   const doughnutOptions = {
     plugins: {
