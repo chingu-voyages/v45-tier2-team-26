@@ -1,6 +1,6 @@
 export default async function fetchMeteorData() {
   try {
-    const response = await fetch('https://data.nasa.gov/resource/gh4g-9sfh.json');
+    const response = await fetch('../../Test_meteors.json');
     const data = await response.json();
     return data;
   } catch (error) {
