@@ -1,22 +1,23 @@
 import './DetailData.css';
 import React, { useState, useEffect } from 'react';
-import getLocation from './getLocation';
 import getMeteorData from '../../services/publicAPI';
+import getLocation from './getLocation';
 import getDetailData from './getDetailData';
 
 function DetailData() {
-  // This state is for testing purposes only. It will be replaced by props later.
   const itemsPerPage = 10; // You can adjust this as needed
   const [meteorData, setMeteorData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [endIndex, setEndIndex] = useState(null);
   const [detailData, setDetailData] = useState(null);
 
-  // Note - this might change - meteorData might be brought in via props
+  // Note - this might change - meteorData might be brought in via props.
+  // If so, also remove meteorData state
   useEffect(() => {
     async function fetchData() {
       const data = await getMeteorData();
-      setMeteorData(data.slice(140, 155));
+      console.log(data);
+      setMeteorData(data);
     }
     fetchData();
   }, []);
