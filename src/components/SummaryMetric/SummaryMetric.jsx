@@ -13,6 +13,8 @@ function SummaryMetric() {
     getMeteoriteData().then((data) => setMeteoriteData(data.slice(0)));
   }, []);
 
+  console.log('switchChart', switchChart);
+
   const changeChart = (index, chartLength) => {
     setSwitchChart((prev) => {
       const newIndex = (prev + index) % chartLength;
@@ -205,7 +207,7 @@ function SummaryMetric() {
 
   const charts = [
     {
-      label: 'Total number of strikes by year',
+      title: 'Total number of strikes by year',
       element: (<DataChart
         label="Total number of strikes by year"
         dataObject={numberByYearChartData}
@@ -214,21 +216,25 @@ function SummaryMetric() {
         yLabel="Number of strikes"
       />),
       option: (
-        <select
-          className="numberByYearStep"
-          aria-label="choose a step"
-          name="Step"
-          id="Step"
-          onChange={(e) => setNumberByYearStep(Number(e.target.value))}
-        >
-          <option value="10">10</option>
-          <option defaultValue value="20">20</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>),
+        <label htmlFor="Step">
+          Yearly Interval:
+          {' '}
+          <select
+            className="numberByYearStep"
+            aria-label="choose a step"
+            name="Step"
+            id="Step"
+            onChange={(e) => setNumberByYearStep(Number(e.target.value))}
+          >
+            <option value="10">10</option>
+            <option defaultValue value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </label>),
     },
     {
-      label: 'Total number of strikes by composition',
+      title: 'Total number of strikes by composition',
       element: (
         <DataChart
           label="Total number of strikes by composition"
@@ -237,17 +243,20 @@ function SummaryMetric() {
         />
       ),
       option: (
-        <select
-          className="numberOfCompositionType"
-          aria-label="choose a composition type"
-          name="CompositionType"
-          id="CompositionType"
-          onChange={(e) => setNumberOfCompositionType(e.target.value)}
-        >
-          <option value="overall">Overall</option>
-          {Object.keys(compositionGroup).map((group) => (
-            <option key={group} value={group}>{group}</option>))}
-        </select>),
+        <label htmlFor="CompositionType">
+          Composition Type:
+          <select
+            className="numberOfCompositionType"
+            aria-label="choose a composition type"
+            name="CompositionType"
+            id="CompositionType"
+            onChange={(e) => setNumberOfCompositionType(e.target.value)}
+          >
+            <option value="overall">Overall</option>
+            {Object.keys(compositionGroup).map((group) => (
+              <option key={group} value={group}>{group}</option>))}
+          </select>
+        </label>),
     },
   ];
 
@@ -265,7 +274,17 @@ function SummaryMetric() {
       <div className="chartContainer">
         <div onClick={() => changeChart(-1, charts.length)} className="leftArrow" />
         <div className="chart">
-          <h2>{charts[switchChart].label}</h2>
+          <label htmlFor="ChartTitle">
+            Chart:
+            {' '}
+            <select name="ChartTitle" onChange={(e) => setSwitchChart(Number(e.target.value))}>
+              {charts.map((chart, index) => (
+                <option key={chart.title} value={index} selected={index === switchChart}>
+                  {chart.title}
+                </option>
+              ))}
+            </select>
+          </label>
           {charts[switchChart].option}
           {charts[switchChart].element}
         </div>
