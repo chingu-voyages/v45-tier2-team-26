@@ -27,7 +27,7 @@ function DataChart({
     plugins: {
       datalabels: {
         formatter: (value, context) => {
-          console.log('context', context);
+          // console.log('context', context);
           const sum = context.dataset.data.reduce((acc, curr) => acc + curr, 0);
           const percentage = Math.round((value / sum) * 100);
           const label = context.chart.data.labels[context.dataIndex];

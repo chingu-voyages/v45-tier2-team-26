@@ -7,14 +7,17 @@ import compositionGroup from './compositionGroup';
 function SummaryMetric() {
   // This state is for testing purposes only. It will be replaced by props later.
   const [meteoriteData, setMeteoriteData] = useState(null);
-  const [switchChart, setSwishChart] = useState(0);
+  const [switchChart, setSwitchChart] = useState(0);
   useEffect(() => {
     console.log('testing');
     getMeteoriteData().then((data) => setMeteoriteData(data.slice(0)));
   }, []);
 
-  const changeChart = (index) => {
-    setSwishChart(switchChart + index);
+  const changeChart = (index, chartLength) => {
+    setSwitchChart((prev) => {
+      const newIndex = (prev + index) % chartLength;
+      return newIndex < 0 ? chartLength + newIndex : newIndex;
+    });
   };
 
   const [numberByYearStep, setNumberByYearStep] = useState(50);
@@ -200,62 +203,73 @@ function SummaryMetric() {
     [groupedNumberByComposition, numberByCompositionType],
   );
 
+  const charts = [
+    {
+      label: 'Total number of strikes by year',
+      element: (<DataChart
+        label="Total number of strikes by year"
+        dataObject={numberByYearChartData}
+        type="bar"
+        xLabel="Year"
+        yLabel="Number of strikes"
+      />),
+      option: (
+        <select
+          className="numberByYearStep"
+          aria-label="choose a step"
+          name="Step"
+          id="Step"
+          onChange={(e) => setNumberByYearStep(Number(e.target.value))}
+        >
+          <option value="10">10</option>
+          <option defaultValue value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>),
+    },
+    {
+      label: 'Total number of strikes by composition',
+      element: (
+        <DataChart
+          label="Total number of strikes by composition"
+          dataObject={numberByCompositionChartData}
+          type="doughnut"
+        />
+      ),
+      option: (
+        <select
+          className="numberOfCompositionType"
+          aria-label="choose a composition type"
+          name="CompositionType"
+          id="CompositionType"
+          onChange={(e) => setNumberOfCompositionType(e.target.value)}
+        >
+          <option value="overall">Overall</option>
+          {Object.keys(compositionGroup).map((group) => (
+            <option key={group} value={group}>{group}</option>))}
+        </select>),
+    },
+  ];
+
   return (
     <div className="summaryContainer">
       <h1>Summary</h1>
       <p>
         Total number of strikes:
-        {total}
+        {` ${total}`}
       </p>
       <p>
         Average mass:
-        {average}
+        {` ${average} (g)`}
       </p>
-      <select
-        className="numberByYearStep"
-        aria-label="choose a step"
-        name="Step"
-        id="Step"
-        onChange={(e) => setNumberByYearStep(Number(e.target.value))}
-      >
-        <option value="10">10</option>
-        <option defaultValue value="20">20</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-      </select>
-      <select
-        className="numberOfCompositionType"
-        aria-label="choose a composition type"
-        name="CompositionType"
-        id="CompositionType"
-        onChange={(e) => setNumberOfCompositionType(e.target.value)}
-      >
-        <option value="overall">Overall</option>
-        {Object.keys(compositionGroup).map((group) => (
-          <option key={group} value={group}>{group}</option>))}
-      </select>
       <div className="chartContainer">
-        <div onClick={() => changeChart(-1)} className="leftArrow" />
+        <div onClick={() => changeChart(-1, charts.length)} className="leftArrow" />
         <div className="chart">
-          {
-            switchChart % 2 === 0 ? (
-              <DataChart
-                label="Total number of strikes by year"
-                dataObject={numberByYearChartData}
-                type="bar"
-                xLabel="Year"
-                yLabel="Number of strikes"
-              />
-            ) : (
-              <DataChart
-                label="Total number of strikes by composition"
-                dataObject={numberByCompositionChartData}
-                type="doughnut"
-              />
-            )
-          }
+          <h2>{charts[switchChart].label}</h2>
+          {charts[switchChart].option}
+          {charts[switchChart].element}
         </div>
-        <div onClick={() => changeChart(1)} className="rightArrow" />
+        <div onClick={() => changeChart(1, charts.length)} className="rightArrow" />
       </div>
     </div>
   );

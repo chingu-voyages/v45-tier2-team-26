@@ -4,7 +4,7 @@ import eslint from 'vite-plugin-eslint2';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), eslint({fix: true, emitErrorAsWarning: true})],
+  plugins: [react(), eslint({ fix: true, emitErrorAsWarning: true })],
   server: {
     port: 2020,
   },
