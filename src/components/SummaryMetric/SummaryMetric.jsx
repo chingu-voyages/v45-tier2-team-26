@@ -10,7 +10,7 @@ function SummaryMetric() {
   const [switchChart, setSwitchChart] = useState(0);
   useEffect(() => {
     console.log('testing');
-    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0)));
+    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 0)));
   }, []);
 
   console.log('switchChart', switchChart);
@@ -74,7 +74,7 @@ function SummaryMetric() {
   // };
 
   const getNumberOfStrikesByYear = (step) => {
-    if (!meteoriteData) {
+    if (!meteoriteData || meteoriteData?.length === 0) {
       return null;
     }
     const dataWithValidYear = meteoriteData.filter(
@@ -106,7 +106,7 @@ function SummaryMetric() {
   };
 
   const getNumberOfStrikesByComposition = () => {
-    if (!meteoriteData) {
+    if (!meteoriteData || meteoriteData?.length === 0) {
       return null;
     }
 
@@ -265,28 +265,34 @@ function SummaryMetric() {
       <h1>Summary</h1>
       <p>
         Total number of strikes:
-        {` ${total}`}
+        {` ${total || 'N/A'}`}
       </p>
       <p>
         Average mass:
-        {` ${average} (g)`}
+        {` ${average || 'N/A'} (g)`}
       </p>
       <div className="chartContainer">
         <div onClick={() => changeChart(-1, charts.length)} className="leftArrow" />
         <div className="chart">
-          <label htmlFor="ChartTitle">
-            Chart:
-            {' '}
-            <select name="ChartTitle" onChange={(e) => setSwitchChart(Number(e.target.value))}>
-              {charts.map((chart, index) => (
-                <option key={chart.title} value={index} selected={index === switchChart}>
-                  {chart.title}
-                </option>
-              ))}
-            </select>
-          </label>
-          {charts[switchChart].option}
-          {charts[switchChart].element}
+          {meteoriteData?.length > 0
+            ? (
+              <>
+                <label htmlFor="ChartTitle">
+                  Chart:
+                  {' '}
+                  <select name="ChartTitle" onChange={(e) => setSwitchChart(Number(e.target.value))}>
+                    {charts.map((chart, index) => (
+                      <option key={chart.title} value={index} selected={index === switchChart}>
+                        {chart.title}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {charts[switchChart].option}
+                {charts[switchChart].element}
+              </>
+            )
+            : <p>There is no data to display</p>}
         </div>
         <div onClick={() => changeChart(1, charts.length)} className="rightArrow" />
       </div>
