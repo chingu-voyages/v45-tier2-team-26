@@ -8,6 +8,8 @@ export default function Header() {
   };
 
   const [name, setName] = useState('');
+  const [year, setYear] = useState('');
+  const [composition, setComposition] = useState('');
   // Possibly add debouncer later to improve performance
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -23,6 +25,8 @@ export default function Header() {
     // Clears all search fields
     // Current small bug: need to click Clear twice to have variable name=''
     setName('');
+    setYear('');
+    setComposition('');
     console.log(`Clear clicked! name = ${name}`);
   };
 
@@ -45,14 +49,14 @@ export default function Header() {
           </div>
           <div className="fieldGroup" id="year">
             <label htmlFor="">Year:</label>
-            <input type="text" placeholder="e.g. 1914" />
+            <input type="text" placeholder="e.g. 1914" value={year} onChange={(e) => setYear(e.target.value)} />
           </div>
         </section>
 
         <section className="columnGroup">
           <div className="fieldGroup" id="composition">
             <label htmlFor="">Composition:</label>
-            <input type="text" placeholder="e.g. L6" />
+            <input type="text" placeholder="e.g. L6" value={composition} onChange={(e) => setComposition(e.target.value)} />
           </div>
           <div className="fieldGroup" id="range">
             <label htmlFor="">Mass Range:</label>
