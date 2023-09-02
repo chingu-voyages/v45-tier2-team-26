@@ -28,7 +28,7 @@
 }
 
 .hamburgerMenu {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 0.3em;
     background: none;
@@ -156,6 +156,10 @@ label {
 @media screen and (max-width: 1300px) {
     #mainInputFields, #mainHeaderBtns {
         display: none;
+    }
+
+    .hamburgerMenu  {
+        display: flex;
     }
 
     .mobileNav {
