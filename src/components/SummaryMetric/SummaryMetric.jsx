@@ -10,7 +10,7 @@ function SummaryMetric() {
   const [switchChart, setSwitchChart] = useState(0);
   useEffect(() => {
     // console.log('testing');
-    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 5)));
+    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0)));
   }, []);
 
   // console.log('switchChart', switchChart);
@@ -226,10 +226,11 @@ function SummaryMetric() {
             aria-label="choose a step"
             name="Step"
             id="Step"
+            value={numberByYearStep}
             onChange={(e) => setNumberByYearStep(Number(e.target.value))}
           >
             <option value="10">10</option>
-            <option defaultValue value="20">20</option>
+            <option value="20">20</option>
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
@@ -253,6 +254,7 @@ function SummaryMetric() {
             aria-label="choose a composition type"
             name="CompositionType"
             id="CompositionType"
+            value={numberByCompositionType}
             onChange={(e) => setNumberOfCompositionType(e.target.value)}
           >
             <option value="overall">Overall</option>
