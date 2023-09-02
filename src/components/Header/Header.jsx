@@ -44,6 +44,7 @@ export default function Header() {
   return (
     <header>
       <nav>
+        {/* mobile/tablet navigtion */}
         <section className={`mobileNav ${isMenuOpen ? 'open' : ''}`}>
           <section className="logo">
             <h1>FireBall</h1>
@@ -100,6 +101,7 @@ export default function Header() {
           </section>
 
         </section>
+        {/* main site navigation */}
         <section className="mainNav">
           <section className="logo">
             <button type="button" className="hamburgerMenu" onClick={handleShowMenu}>
