@@ -1,76 +1,24 @@
-import getLatLon from './getLatLon';
-
-export default async function getLocation(meteorData) {
-  const latLongData = getLatLon(meteorData);
-  const url = 'https://api.geoapify.com/v1/batch/geocode/reverse?apiKey=143adca609dd41258606ce840f8db559';
-
-  // Remove null entries from latLongData
-  const filteredLatLongData = latLongData.filter((entry) => entry !== null);
-
-  if (filteredLatLongData.length === 0) {
-    return null;
-  }
+export default async function fetchLocation(location) {
+  const apiUrl = `https://api.radar.io/v1/geocode/reverse?coordinates=${location}`;
+  const apiKey = '82c169872336bf3c339e356bdee0036a3648ed9f';
 
   try {
-    const response = await fetch(url, {
-      method: 'POST',
+    const response = await fetch(apiUrl, {
+      method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
+        Authorization: `prj_live_pk_${apiKey}`,
       },
-      body: JSON.stringify(filteredLatLongData),
     });
 
-    const result = await getBodyAndStatus(response);
-
-    if (result.status !== 202) {
-      throw result;
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    // console.log(`Job ID: ${result.body.id}`);
-    // console.log(`Job URL: ${result.body.url}`);
-
-    const queryResult = await getAsyncResult(`${url}&id=${result.body.id}`, 1000, 100);
-    // console.log(queryResult);
-    return queryResult;
+    const data = await response.json();
+    // Handle the response data here
+    return data;
   } catch (error) {
-    console.error(error);
-  }
-}
-
-async function getBodyAndStatus(response) {
-  const responseBody = await response.json();
-  return {
-    status: response.status,
-    body: responseBody,
-  };
-}
-
-async function getAsyncResult(url, timeout, maxAttempt) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      repeatUntilSuccess(resolve, reject, 0);
-    }, timeout);
-  });
-
-  async function repeatUntilSuccess(resolve, reject, attempt) {
-    console.log(`Attempt: ${attempt}`);
-    try {
-      const response = await fetch(url);
-      const result = await getBodyAndStatus(response);
-
-      if (result.status === 200) {
-        resolve(result.body);
-      } else if (attempt >= maxAttempt) {
-        reject('Max amount of attempts achieved');
-      } else if (result.status === 202) {
-        setTimeout(() => {
-          repeatUntilSuccess(resolve, reject, attempt + 1);
-        }, timeout);
-      } else {
-        reject(result.body);
-      }
-    } catch (error) {
-      reject(error);
-    }
+    // Handle any errors here
+    console.error('Fetch error:', error);
   }
 }
