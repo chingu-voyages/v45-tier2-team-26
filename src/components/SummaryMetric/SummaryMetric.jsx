@@ -216,7 +216,12 @@ function SummaryMetric() {
           xLabel="Year"
           yLabel="Number of strikes"
         />
-      ) : <p>No data for this chart</p>,
+      ) : (
+        <div className="placeholder-container">
+          <div className="no-data" />
+          <p>No data for this chart</p>
+        </div>
+      ),
       option: (
         <label htmlFor="Step">
           Yearly Interval:
@@ -245,7 +250,13 @@ function SummaryMetric() {
           dataObject={numberByCompositionChartData}
           type="doughnut"
         />
-      ) : <p>No data for this chart</p>,
+      )
+        : (
+          <div className="placeholder-container">
+            <div className="no-data" />
+            <p>No data for this chart</p>
+          </div>
+        ),
       option: (
         <label htmlFor="CompositionType">
           Composition Type:
@@ -277,16 +288,15 @@ function SummaryMetric() {
         Average mass:
         {` ${average || 'N/A'} (g)`}
       </p>
-      <div className="chartContainer">
-        <div onClick={() => changeChart(-1, charts.length)} className="leftArrow" />
-        <div className="chart">
-          {meteoriteData?.length > 0
-            ? (
-              <>
+      <div className="chart">
+        {meteoriteData?.length > 0
+          ? (
+            <>
+              <div className="chartTitleContainer">
                 <label htmlFor="ChartTitle">
                   Chart:
                   {' '}
-                  <select name="ChartTitle" onChange={(e) => setSwitchChart(Number(e.target.value))} value={switchChart}>
+                  <select name="ChartTitle" className="chartTitle" onChange={(e) => setSwitchChart(Number(e.target.value))} value={switchChart}>
                     {charts.map((chart, index) => (
                       <option key={chart.title} value={index}>
                         {chart.title}
@@ -295,12 +305,21 @@ function SummaryMetric() {
                   </select>
                 </label>
                 {charts[switchChart].option}
-                {charts[switchChart].element}
-              </>
-            )
-            : <p>There is no data to display</p>}
-        </div>
-        <div onClick={() => changeChart(1, charts.length)} className="rightArrow" />
+              </div>
+              <div className="chartDetails">
+                <div onClick={() => changeChart(-1, charts.length)} className="leftArrow" />
+                <div className="data">
+                  {charts[switchChart].element}
+                </div>
+                <div onClick={() => changeChart(1, charts.length)} className="rightArrow" />
+              </div>
+            </>
+          )
+          : (
+            <div>
+              <p>There is no data to display</p>
+            </div>
+          )}
       </div>
     </div>
   );

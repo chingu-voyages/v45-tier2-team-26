@@ -38,6 +38,8 @@ function DataChart({
         },
       },
     },
+    responsive: true,
+    maintainAspectRatio: false,
   };
 
   const barOptions = {
@@ -55,6 +57,8 @@ function DataChart({
         },
       },
     },
+    responsive: true,
+    maintainAspectRatio: false,
   };
 
   switch (type) {
