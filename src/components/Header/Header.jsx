@@ -1,15 +1,15 @@
 import { useState } from "react";
 import "./header.css";
 import Fuse from "fuse.js";
-import getMeteoriteData from "../../services/publicAPI";
+// import getMeteoriteData from "../../services/publicAPI";
 import json from "../../../Meteorite_Landings.json";
 
-async function loadData() {
-  const response = await fetch("https://data.nasa.gov/resource/gh4g-9sfh.json");
-  const names = await response.json();
+// async function loadData() {
+//   const response = await fetch("https://data.nasa.gov/resource/gh4g-9sfh.json");
+//   const names = await response.json();
 
-  return names;
-}
+//   return names;
+// }
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,9 +44,10 @@ export default function Header() {
 
     const fuse = new Fuse(json, {
       keys: ["name", "recclass", "year"],
-      limit: 100,
+      includeMatches: true,
+      limit: 10,
     });
-    const filteredData = fuse.search(name);
+    let filteredData = fuse.search(name);
 
     console.log(
       `Query entered: name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${filteredData}\nDone!`
