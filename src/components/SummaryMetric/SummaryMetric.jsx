@@ -9,11 +9,11 @@ function SummaryMetric() {
   const [meteoriteData, setMeteoriteData] = useState(null);
   const [switchChart, setSwitchChart] = useState(0);
   useEffect(() => {
-    console.log('testing');
+    // console.log('testing');
     getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 5)));
   }, []);
 
-  console.log('switchChart', switchChart);
+  // console.log('switchChart', switchChart);
 
   const changeChart = (index, chartLength) => {
     setSwitchChart((prev) => {
@@ -45,12 +45,12 @@ function SummaryMetric() {
       return average;
     }
 
-    console.log(
-      'meteorite data with invalid mass',
-      meteoriteData.filter(
-        (data) => !(data['mass (g)'] && !Number.isNaN(Number(data['mass (g)']) && Number(data['mass (g)']) > 0)),
-      ),
-    );
+    // console.log(
+    //   'meteorite data with invalid mass',
+    //   meteoriteData.filter(
+    //     (data) => !(data['mass (g)'] && !Number.isNaN(Number(data['mass (g)']) && Number(data['mass (g)']) > 0)),
+    //   ),
+    // );
 
     const dataWithValidMass = meteoriteData.filter(
       (data) => data['mass (g)'] && !Number.isNaN(Number(data['mass (g)'])) && Number(data['mass (g)']) > 0,
@@ -80,9 +80,9 @@ function SummaryMetric() {
     const dataWithValidYear = meteoriteData.filter(
       (data) => data.year && !Number.isNaN(data.year),
     );
-    console.log('meteorite data with invalid year', meteoriteData.filter(
-      (data) => !(data.year && !Number.isNaN(data.year)),
-    ));
+    // console.log('meteorite data with invalid year', meteoriteData.filter(
+    //   (data) => !(data.year && !Number.isNaN(data.year)),
+    // ));
 
     dataWithValidYear.sort((a, b) => Number(a.year) - Number(b.year));
 
@@ -143,8 +143,8 @@ function SummaryMetric() {
         }
       });
     });
-    console.log('number of strikes by composition', numberOfStrikesByComposition);
-    console.log('grouped composition', groupedComposition);
+    // console.log('number of strikes by composition', numberOfStrikesByComposition);
+    // console.log('grouped composition', groupedComposition);
     return groupedComposition;
   };
 
@@ -153,7 +153,7 @@ function SummaryMetric() {
       return null;
     }
 
-    console.log('test', numberByCompositionType);
+    // console.log('test', numberByCompositionType);
 
     switch (numberByCompositionType) {
       case 'overall':
@@ -284,9 +284,9 @@ function SummaryMetric() {
                 <label htmlFor="ChartTitle">
                   Chart:
                   {' '}
-                  <select name="ChartTitle" onChange={(e) => setSwitchChart(Number(e.target.value))}>
+                  <select name="ChartTitle" onChange={(e) => setSwitchChart(Number(e.target.value))} value={switchChart}>
                     {charts.map((chart, index) => (
-                      <option key={chart.title} value={index} selected={index === switchChart}>
+                      <option key={chart.title} value={index}>
                         {chart.title}
                       </option>
                     ))}
