@@ -35,7 +35,7 @@ export default function Header() {
     //   limit: 10,
     // });
     // const filteredData = fuse.search(name);
-    const filteredData = loadData().json;
+    const filteredData = loadData().then((data) => { console.log(data); });
 
     console.log(`Query entered: ${name}\nData found:\n ${filteredData}\nDone!`);
   };
