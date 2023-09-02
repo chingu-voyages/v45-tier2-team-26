@@ -10,7 +10,7 @@ function SummaryMetric() {
   const [switchChart, setSwitchChart] = useState(0);
   useEffect(() => {
     console.log('testing');
-    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 0)));
+    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0, 5)));
   }, []);
 
   console.log('switchChart', switchChart);
@@ -208,13 +208,15 @@ function SummaryMetric() {
   const charts = [
     {
       title: 'Total number of strikes by year',
-      element: (<DataChart
-        label="Total number of strikes by year"
-        dataObject={numberByYearChartData}
-        type="bar"
-        xLabel="Year"
-        yLabel="Number of strikes"
-      />),
+      element: numberByYearChartData ? (
+        <DataChart
+          label="Total number of strikes by year"
+          dataObject={numberByYearChartData}
+          type="bar"
+          xLabel="Year"
+          yLabel="Number of strikes"
+        />
+      ) : <p>No data for this chart</p>,
       option: (
         <label htmlFor="Step">
           Yearly Interval:
@@ -231,17 +233,18 @@ function SummaryMetric() {
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-        </label>),
+        </label>
+      ),
     },
     {
       title: 'Total number of strikes by composition',
-      element: (
+      element: numberByCompositionChartData ? (
         <DataChart
           label="Total number of strikes by composition"
           dataObject={numberByCompositionChartData}
           type="doughnut"
         />
-      ),
+      ) : <p>No data for this chart</p>,
       option: (
         <label htmlFor="CompositionType">
           Composition Type:
@@ -256,7 +259,8 @@ function SummaryMetric() {
             {Object.keys(compositionGroup).map((group) => (
               <option key={group} value={group}>{group}</option>))}
           </select>
-        </label>),
+        </label>
+      ),
     },
   ];
 
