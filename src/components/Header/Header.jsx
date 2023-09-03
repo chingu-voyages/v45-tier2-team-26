@@ -63,6 +63,8 @@ export default function Header() {
         threshold: 0.25,
       });
       const fuseResults = fuse.search(name);
+
+      // Not sure why, but this is needed so that Clear button function works properly
       setResults(fuseResults);
 
       // For testing...
@@ -91,8 +93,7 @@ export default function Header() {
     setComposition('');
     // setMassRange(); should result to default position...
 
-    // Project requirement: if nothing queried, display full list
-    setResults(json);
+    // Testing...
     console.log(
       `Clear clicked! name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${JSON.stringify(
         searchResults,
