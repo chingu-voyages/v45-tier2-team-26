@@ -1,25 +1,17 @@
-import { useState } from "react";
-import "./header.css";
-import Fuse from "fuse.js";
-// import getMeteoriteData from "../../services/publicAPI";
-import json from "../../../Meteorite_Landings.json";
-
-// async function loadData() {
-//   const response = await fetch("https://data.nasa.gov/resource/gh4g-9sfh.json");
-//   const names = await response.json();
-
-//   return names;
-// }
+import React, { useState, useEffect } from 'react';
+import './header.css';
+import Fuse from 'fuse.js';
+import json from '../../../Meteorite_Landings.json';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleHideMenu = () => {
-    console.log("hide menu");
+    console.log('hide menu');
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleShowMenu = () => {
-    console.log("show menu");
+    console.log('show menu');
     setIsMenuOpen(!isMenuOpen);
   };
 
@@ -28,13 +20,39 @@ export default function Header() {
     setSliderValue(e.target.value);
   };
 
-  const [name, setName] = useState("");
-  const [year, setYear] = useState("");
-  const [composition, setComposition] = useState("");
+  const [data, setData] = useState();
+  const [results, setResults] = useState();
+  const [name, setName] = useState('');
+  const [year, setYear] = useState('');
+  const [composition, setComposition] = useState('');
+
+  useEffect(() => {
+    fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
+      .then((response) => response.json())
+      .then((jsonData) => setData(jsonData))
+      .catch((error) => console.error('Error loading data:', error));
+  }, []);
+
+  // ***
+  // const fuse = new Fuse(data, {
+  //   keys: ['name'],
+  //   includeMatches: true,
+  //   threshold: 0.25,
+  // });
+
   // Possibly add debouncer later to improve performance
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
+
+  // useEffect(() => {
+  //   if (name === '') {
+  //     setName([]);
+  //   } else {
+  //     const results = fuse.search(name);
+  //     setResults(results);
+  //   }
+  // }, [name, data]);
 
   const handleSearch = () => {
     // Takes query at Name/Year/Composition box and searches through JSON file for matches
@@ -42,26 +60,33 @@ export default function Header() {
     setYear(year);
     setComposition(composition);
 
-    const fuse = new Fuse(json, {
-      keys: ["name", "recclass", "year"],
+    const fuse = new Fuse(data, {
+      keys: ['name'],
       includeMatches: true,
-      limit: 10,
+      threshold: 0.25,
     });
-    let filteredData = fuse.search(name);
+    const results = fuse.search(name);
+    setResults(results);
 
+    // For testing...
     console.log(
-      `Query entered: name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${filteredData}\nDone!`
+      `Query entered: name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${JSON.stringify(
+        results,
+        null,
+        2,
+      )}\nDone!`,
     );
   };
 
   const handleClear = () => {
     // Clears all search fields
     // Current small bug: need to click Clear twice to have variables == ''
-    setName("");
-    setYear("");
-    setComposition("");
+    setName('');
+    setYear('');
+    setComposition('');
+    setResults([]);
     console.log(
-      `Clear clicked! name = ${name}, year = ${year}, composition = ${composition}`
+      `Clear clicked! name = ${name}, year = ${year}, composition = ${composition}`,
     );
   };
 
@@ -69,7 +94,7 @@ export default function Header() {
     <header>
       <nav>
         {/* mobile/tablet navigtion */}
-        <section className={`mobileNav ${isMenuOpen ? "open" : ""}`}>
+        <section className={`mobileNav ${isMenuOpen ? 'open' : ''}`}>
           <section className="logo">
             <h1>FireBall</h1>
             <button type="button" id="closeNavBtn" onClick={handleHideMenu}>
