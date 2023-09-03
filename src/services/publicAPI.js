@@ -1,6 +1,6 @@
 export default async function fetchMeteorData() {
   try {
-    const response = await fetch('../../Test_meteors.json');
+    const response = await fetch('../../Meteorite_Landings.json');
     const data = await response.json();
     return data;
   } catch (error) {
