@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './header.css';
+import Fuse from 'fuse.js';
+import json from '../../../Meteorite_Landings.json';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,27 +20,85 @@ export default function Header() {
     setSliderValue(e.target.value);
   };
 
+  const [data, setData] = useState(json);
+  const [results, setResults] = useState(json);
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
   const [composition, setComposition] = useState('');
+
+  // Should pass searchResults as props to other components later...
+  let searchResults = json;
+
+  /* IF USING PUBLIC API, USE THIS */
+  // useEffect(() => {
+  //   fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
+  //     .then((response) => response.json())
+  //     .then((jsonData) => setData(jsonData))
+  //     .catch((error) => console.error('Error loading data:', error));
+  // }, []);
+
+  /* IF USING Meteorite_Landings.json, USE THIS */
+  useEffect(() => {
+    setData(json);
+  }, []);
+
   // Possibly add debouncer later to improve performance
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
 
   const handleSearch = () => {
-    // Takes query at Name box and searches through JSON file for matches
+    // Takes query at Name/Year/Composition box and searches through JSON file for matches
     setName(name);
-    console.log(`Query entered: ${name}`);
+    setYear(year);
+    setComposition(composition);
+    // setMassRange(massRange); will be trickier...
+
+    if (!(name || year || composition)) {
+      searchResults = json;
+    } else {
+      const fuse = new Fuse(data, {
+        keys: ['name', 'year', 'composition'],
+        includeMatches: true,
+        threshold: 0.3,
+      });
+      const fuseResults = fuse.search(name + year + composition);
+
+      // Not sure why, but this is needed so that Clear button function works properly
+      setResults(fuseResults);
+
+      // For testing...
+      // printResults to see full Fuse returned object, including ranking scores, criteria, etc.
+      // Uncomment below & replace stringified searchResults with just printResults in console.log
+      // const printResults = JSON.stringify(fuseResults, null, 2);
+
+      // If .csv format: [{'name': name1, 'recclass': recclass1, 'mass': mass1, 'year': 1970, ...}]
+      // Note format of 'year', if using PUBLIC API 'year' would format to 1970-01-01T00:00:00.000
+
+      searchResults = fuseResults.map((fuseResult) => fuseResult.item);
+    }
+
+    console.log(
+      `Query entered: name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${JSON.stringify(
+        searchResults,
+      )}\nDone!`,
+    );
   };
 
   const handleClear = () => {
     // Clears all search fields
-    // Current small bug: need to click Clear twice to have variable name=''
+    // Current small bug: need to click Clear twice to have variables == ''
     setName('');
     setYear('');
     setComposition('');
-    console.log(`Clear clicked! name = ${name}`);
+    // setMassRange(); should result to default position...
+
+    // Testing...
+    console.log(
+      `Clear clicked! name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${JSON.stringify(
+        searchResults,
+      )}\nDone!`,
+    );
   };
 
   return (
@@ -67,12 +127,22 @@ export default function Header() {
               </div>
               <div className="fieldGroup mobileFieldGroup" id="year">
                 <label htmlFor="">Year:</label>
-                <input type="text" placeholder="e.g. 1914" value={year} onChange={(e) => setYear(e.target.value)} />
+                <input
+                  type="text"
+                  placeholder="e.g. 1914"
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                />
               </div>
 
               <div className="fieldGroup mobileFieldGroup" id="composition">
                 <label htmlFor="">Composition:</label>
-                <input type="text" placeholder="e.g. L6" value={composition} onChange={(e) => setComposition(e.target.value)} />
+                <input
+                  type="text"
+                  placeholder="e.g. L6"
+                  value={composition}
+                  onChange={(e) => setComposition(e.target.value)}
+                />
               </div>
               <div className="fieldGroup mobileFieldGroup" id="range">
                 <label htmlFor="">Mass Range:</label>
@@ -99,12 +169,15 @@ export default function Header() {
               Clear
             </button>
           </section>
-
         </section>
         {/* main site navigation */}
         <section className="mainNav">
           <section className="logo">
-            <button type="button" className="hamburgerMenu" onClick={handleShowMenu}>
+            <button
+              type="button"
+              className="hamburgerMenu"
+              onClick={handleShowMenu}
+            >
               <div className="bar" />
               <div className="bar" />
               <div className="bar" />
@@ -125,14 +198,24 @@ export default function Header() {
               </div>
               <div className="fieldGroup" id="year">
                 <label htmlFor="">Year:</label>
-                <input type="text" placeholder="e.g. 1914" value={year} onChange={(e) => setYear(e.target.value)} />
+                <input
+                  type="text"
+                  placeholder="e.g. 1914"
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                />
               </div>
             </section>
 
             <section className="columnGroup">
               <div className="fieldGroup" id="composition">
                 <label htmlFor="">Composition:</label>
-                <input type="text" placeholder="e.g. L6" value={composition} onChange={(e) => setComposition(e.target.value)} />
+                <input
+                  type="text"
+                  placeholder="e.g. L6"
+                  value={composition}
+                  onChange={(e) => setComposition(e.target.value)}
+                />
               </div>
               <div className="fieldGroup" id="range">
                 <label htmlFor="">Mass Range:</label>
@@ -161,7 +244,6 @@ export default function Header() {
           </section>
         </section>
       </nav>
-
     </header>
   );
 }
