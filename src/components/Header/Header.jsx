@@ -20,11 +20,14 @@ export default function Header() {
     setSliderValue(e.target.value);
   };
 
-  const [data, setData] = useState([]);
-  const [results, setResults] = useState([]);
+  const [data, setData] = useState(json);
+  const [results, setResults] = useState(json);
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
   const [composition, setComposition] = useState('');
+
+  // Should pass searchResults as props to other components later...
+  let searchResults = json;
 
   /* IF USING PUBLIC API, USE THIS */
   // useEffect(() => {
@@ -49,27 +52,33 @@ export default function Header() {
     setName(name);
     setYear(year);
     setComposition(composition);
+    // setMassRange(massRange); will be trickier...
 
-    const fuse = new Fuse(data, {
-      keys: ['name'],
-      includeMatches: true,
-      threshold: 0.25,
-    });
-    const results = fuse.search(name);
-    setResults(results);
+    if (!(name || year || composition)) {
+      searchResults = json;
+    } else {
+      const fuse = new Fuse(data, {
+        keys: ['name'],
+        includeMatches: true,
+        threshold: 0.25,
+      });
+      const fuseResults = fuse.search(name);
+      setResults(fuseResults);
 
-    // For testing...
-    // printResults to see full Fuse returned object, including ranking scores, criteria used, etc.
-    // const printResults = JSON.stringify(results, null, 2);
+      // For testing...
+      // printResults to see full Fuse returned object, including ranking scores, criteria, etc.
+      // Uncomment below & replace stringified searchResults with just printResults in console.log
+      // const printResults = JSON.stringify(fuseResults, null, 2);
 
-    // If .csv format: [{'name': name1, 'recclass': recclass1, 'mass': mass1, 'year': 1970, ...}]
-    // Note the format of 'year', if using PUBLIC API 'year' would format to 1970-01-01T00:00:00.000
-    // Should pass formattedResults as props to other components later...
-    const formattedResults = results.map((result) => result.item);
+      // If .csv format: [{'name': name1, 'recclass': recclass1, 'mass': mass1, 'year': 1970, ...}]
+      // Note format of 'year', if using PUBLIC API 'year' would format to 1970-01-01T00:00:00.000
+
+      searchResults = fuseResults.map((fuseResult) => fuseResult.item);
+    }
 
     console.log(
       `Query entered: name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${JSON.stringify(
-        formattedResults,
+        searchResults,
       )}\nDone!`,
     );
   };
@@ -80,9 +89,14 @@ export default function Header() {
     setName('');
     setYear('');
     setComposition('');
-    setResults([]);
+    // setMassRange(); should result to default position...
+
+    // Project requirement: if nothing queried, display full list
+    setResults(json);
     console.log(
-      `Clear clicked! name = ${name}, year = ${year}, composition = ${composition}`,
+      `Clear clicked! name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${JSON.stringify(
+        searchResults,
+      )}\nDone!`,
     );
   };
 
