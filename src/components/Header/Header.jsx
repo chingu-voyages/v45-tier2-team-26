@@ -58,11 +58,11 @@ export default function Header() {
       searchResults = json;
     } else {
       const fuse = new Fuse(data, {
-        keys: ['name'],
+        keys: ['name', 'year', 'composition'],
         includeMatches: true,
-        threshold: 0.25,
+        threshold: 0.3,
       });
-      const fuseResults = fuse.search(name);
+      const fuseResults = fuse.search(name + year + composition);
 
       // Not sure why, but this is needed so that Clear button function works properly
       setResults(fuseResults);
