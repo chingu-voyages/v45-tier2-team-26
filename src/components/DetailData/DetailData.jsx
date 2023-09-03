@@ -115,7 +115,7 @@ function DetailData() {
                     <td>{item.name}</td>
                     <td>{item.id}</td>
                     <td>{item.recclass}</td>
-                    <td>{item.massgrams}</td>
+                    <td>{item['mass (g)']}</td>
                     <td>{item.year}</td>
                     <td>{parseFloat(item.reclat).toFixed(3)}</td>
                     <td>{parseFloat(item.reclong).toFixed(3)}</td>
