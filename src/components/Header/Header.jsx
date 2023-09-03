@@ -20,39 +20,29 @@ export default function Header() {
     setSliderValue(e.target.value);
   };
 
-  const [data, setData] = useState();
-  const [results, setResults] = useState();
+  const [data, setData] = useState([]);
+  const [results, setResults] = useState([]);
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
   const [composition, setComposition] = useState('');
 
-  useEffect(() => {
-    fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
-      .then((response) => response.json())
-      .then((jsonData) => setData(jsonData))
-      .catch((error) => console.error('Error loading data:', error));
-  }, []);
+  /* IF USING PUBLIC API, USE THIS */
+  // useEffect(() => {
+  //   fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
+  //     .then((response) => response.json())
+  //     .then((jsonData) => setData(jsonData))
+  //     .catch((error) => console.error('Error loading data:', error));
+  // }, []);
 
-  // ***
-  // const fuse = new Fuse(data, {
-  //   keys: ['name'],
-  //   includeMatches: true,
-  //   threshold: 0.25,
-  // });
+  /* IF USING Meteorite_Landings.json, USE THIS */
+  useEffect(() => {
+    setData(json);
+  }, []);
 
   // Possibly add debouncer later to improve performance
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
-
-  // useEffect(() => {
-  //   if (name === '') {
-  //     setName([]);
-  //   } else {
-  //     const results = fuse.search(name);
-  //     setResults(results);
-  //   }
-  // }, [name, data]);
 
   const handleSearch = () => {
     // Takes query at Name/Year/Composition box and searches through JSON file for matches
@@ -69,11 +59,17 @@ export default function Header() {
     setResults(results);
 
     // For testing...
+    // printResults to see full Fuse returned object, including ranking scores, criteria used, etc.
+    // const printResults = JSON.stringify(results, null, 2);
+
+    // If .csv format: [{'name': name1, 'recclass': recclass1, 'mass': mass1, 'year': 1970, ...}]
+    // Note the format of 'year', if using PUBLIC API 'year' would format to 1970-01-01T00:00:00.000
+    // Should pass formattedResults as props to other components later...
+    const formattedResults = results.map((result) => result.item);
+
     console.log(
       `Query entered: name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${JSON.stringify(
-        results,
-        null,
-        2,
+        formattedResults,
       )}\nDone!`,
     );
   };
