@@ -210,93 +210,127 @@ function SummaryMetric() {
   const charts = [
     {
       title: 'Total number of strikes by year',
-      element: numberByYearChartData ? (
-        yearChartType === 'bar' ? (
-          <DataChart
-            label="Total number of strikes by year"
-            dataObject={numberByYearChartData}
-            type="bar"
-            xLabel="Year"
-            yLabel="Number of strikes"
-          />
-        ) : (
-          <DataChart
-            label="Total number of strikes by year"
-            dataObject={numberByYearChartData}
-            type="doughnut"
-          />
-        )
-      ) : (
+      element: getYearChartElement(numberByYearChartData, yearChartType),
+      option: getYearChartOption(yearChartType, numberByYearStep, setNumberByYearStep),
+    },
+    {
+      title: 'Total number of strikes by composition',
+      element: getCompositionChartElement(numberByCompositionChartData, compositionChartType),
+      option: getCompositionChartOption(numberByCompositionType, setNumberOfCompositionType, compositionGroup),
+    },
+  ];
+
+  function getYearChartElement(numberByYearChartData, yearChartType) {
+    if (!numberByYearChartData) {
+      return (
         <div className="placeholder-container">
           <div className="no-data" />
           <p>No data for this chart</p>
         </div>
-      ),
-      option: (yearChartType === 'bar' ? (
-        <label htmlFor="Step">
-          Yearly Interval:
-          {' '}
-          <select
-            className="numberByYearStep"
-            aria-label="choose a step"
-            name="Step"
-            id="Step"
-            value={numberByYearStep}
-            onChange={(e) => setNumberByYearStep(Number(e.target.value))}
-          >
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-        </label>
-      ) : null
-      ),
-    },
-    {
-      title: 'Total number of strikes by composition',
-      element: numberByCompositionChartData ? (
-        compositionChartType === 'doughnut' ? (
-          <DataChart
-            label="Total number of strikes by composition"
-            dataObject={numberByCompositionChartData}
-            type="doughnut"
-          />
-        ) : (
-          <DataChart
-            label="Total number of strikes by composition"
-            dataObject={numberByCompositionChartData}
-            type="bar"
-            xLabel="Composition"
-            yLabel="Number of strikes"
-          />
-        )
-      )
-        : (
-          <div className="placeholder-container">
-            <div className="no-data" />
-            <p>No data for this chart</p>
-          </div>
-        ),
-      option: (
-        <label htmlFor="CompositionType">
-          Composition Type:
-          <select
-            className="numberOfCompositionType"
-            aria-label="choose a composition type"
-            name="CompositionType"
-            id="CompositionType"
-            value={numberByCompositionType}
-            onChange={(e) => setNumberOfCompositionType(e.target.value)}
-          >
-            <option value="overall">Overall</option>
-            {Object.keys(compositionGroup).map((group) => (
-              <option key={group} value={group}>{group}</option>))}
-          </select>
-        </label>
-      ),
-    },
-  ];
+      );
+    }
+
+    if (yearChartType === 'bar') {
+      return (
+        <DataChart
+          label="Total number of strikes by year"
+          dataObject={numberByYearChartData}
+          type="bar"
+          xLabel="Year"
+          yLabel="Number of strikes"
+        />
+      );
+    }
+
+    return (
+      <DataChart
+        label="Total number of strikes by year"
+        dataObject={numberByYearChartData}
+        type="doughnut"
+      />
+    );
+  }
+
+  function getYearChartOption(yearChartType, numberByYearStep, setNumberByYearStep) {
+    if (yearChartType !== 'bar') {
+      return null;
+    }
+
+    return (
+      <label htmlFor="Step">
+        Yearly Interval:
+        {' '}
+        <select
+          className="numberByYearStep"
+          aria-label="choose a step"
+          name="Step"
+          id="Step"
+          value={numberByYearStep}
+          onChange={(e) => setNumberByYearStep(Number(e.target.value))}
+        >
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </label>
+    );
+  }
+
+  function getCompositionChartElement(numberByCompositionChartData, compositionChartType) {
+    if (!numberByCompositionChartData) {
+      return (
+        <div className="placeholder-container">
+          <div className="no-data" />
+          <p>No data for this chart</p>
+        </div>
+      );
+    }
+
+    if (compositionChartType === 'doughnut') {
+      return (
+        <DataChart
+          label="Total number of strikes by composition"
+          dataObject={numberByCompositionChartData}
+          type="doughnut"
+        />
+      );
+    }
+
+    return (
+      <DataChart
+        label="Total number of strikes by composition"
+        dataObject={numberByCompositionChartData}
+        type="bar"
+        xLabel="Composition"
+        yLabel="Number of strikes"
+      />
+    );
+  }
+
+  function getCompositionChartOption(
+    numberByCompositionType,
+    setNumberOfCompositionType,
+    compositionGroup,
+  ) {
+    return (
+      <label htmlFor="CompositionType">
+        Composition Type:
+        <select
+          className="numberOfCompositionType"
+          aria-label="choose a composition type"
+          name="CompositionType"
+          id="CompositionType"
+          value={numberByCompositionType}
+          onChange={(e) => setNumberOfCompositionType(e.target.value)}
+        >
+          <option value="overall">Overall</option>
+          {Object.keys(compositionGroup).map((group) => (
+            <option key={group} value={group}>{group}</option>))}
+        </select>
+      </label>
+    );
+  }
 
   const handleChartTypeChange = (e) => {
     switch (switchChart) {
