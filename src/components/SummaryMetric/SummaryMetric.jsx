@@ -32,6 +32,7 @@ function SummaryMetric() {
 
   const [numberByYearStep, setNumberByYearStep] = useState(50);
   const [numberByCompositionType, setNumberOfCompositionType] = useState('overall');
+  // States for chart type, allow user to switch between bar and doughnut chart for each chart
   const [yearChartType, setYearChartType] = useState('bar');
   const [compositionChartType, setCompositionChartType] = useState('doughnut');
 
@@ -54,6 +55,7 @@ function SummaryMetric() {
     [groupedNumberByComposition, numberByCompositionType],
   );
 
+  // Abstract the following functions from charts array to make the code more readable
   const getYearChartElement = (numberByYearChartData, yearChartType) => {
     if (!numberByYearChartData) {
       return (
@@ -207,6 +209,21 @@ function SummaryMetric() {
     }
   };
 
+  const handleReset = () => {
+    switch (switchChart) {
+      case 0:
+        setNumberByYearStep(50);
+        setYearChartType('bar');
+        break;
+      case 1:
+        setNumberOfCompositionType('overall');
+        setCompositionChartType('doughnut');
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="summaryContainer">
       <h1>Summary</h1>
@@ -243,6 +260,7 @@ function SummaryMetric() {
                   </select>
                 </label>
                 {charts[switchChart].option}
+                <button type="button" onClick={handleReset}>Reset to Default</button>
               </div>
               <div className="chartDetails">
                 <div onClick={() => changeChart(-1, charts.length)} className="leftArrow" />
