@@ -30,11 +30,14 @@ function DataChart({
           // console.log('context', context);
           const sum = context.dataset.data.reduce((acc, curr) => acc + curr, 0);
           const percentage = Math.round((value / sum) * 100);
-          if (percentage > 1) {
+          if (percentage > 2) {
             const label = context.chart.data.labels[context.dataIndex];
             return `${label} ${percentage}%`;
           }
           return null;
+        },
+        font: {
+          size: 14,
         },
       },
     },
