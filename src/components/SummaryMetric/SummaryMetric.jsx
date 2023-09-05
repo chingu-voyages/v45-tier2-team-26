@@ -24,6 +24,8 @@ function SummaryMetric() {
 
   const [numberByYearStep, setNumberByYearStep] = useState(50);
   const [numberByCompositionType, setNumberOfCompositionType] = useState('overall');
+  const [yearChartType, setYearChartType] = useState('bar');
+  const [compositionChartType, setCompositionChartType] = useState('doughnut');
 
   const getTotalStrikes = () => {
     if (!meteoriteData) {
@@ -209,20 +211,28 @@ function SummaryMetric() {
     {
       title: 'Total number of strikes by year',
       element: numberByYearChartData ? (
-        <DataChart
-          label="Total number of strikes by year"
-          dataObject={numberByYearChartData}
-          type="bar"
-          xLabel="Year"
-          yLabel="Number of strikes"
-        />
+        yearChartType === 'bar' ? (
+          <DataChart
+            label="Total number of strikes by year"
+            dataObject={numberByYearChartData}
+            type="bar"
+            xLabel="Year"
+            yLabel="Number of strikes"
+          />
+        ) : (
+          <DataChart
+            label="Total number of strikes by year"
+            dataObject={numberByYearChartData}
+            type="doughnut"
+          />
+        )
       ) : (
         <div className="placeholder-container">
           <div className="no-data" />
           <p>No data for this chart</p>
         </div>
       ),
-      option: (
+      option: (yearChartType === 'bar' ? (
         <label htmlFor="Step">
           Yearly Interval:
           {' '}
@@ -240,16 +250,27 @@ function SummaryMetric() {
             <option value="100">100</option>
           </select>
         </label>
+      ) : null
       ),
     },
     {
       title: 'Total number of strikes by composition',
       element: numberByCompositionChartData ? (
-        <DataChart
-          label="Total number of strikes by composition"
-          dataObject={numberByCompositionChartData}
-          type="doughnut"
-        />
+        compositionChartType === 'doughnut' ? (
+          <DataChart
+            label="Total number of strikes by composition"
+            dataObject={numberByCompositionChartData}
+            type="doughnut"
+          />
+        ) : (
+          <DataChart
+            label="Total number of strikes by composition"
+            dataObject={numberByCompositionChartData}
+            type="bar"
+            xLabel="Composition"
+            yLabel="Number of strikes"
+          />
+        )
       )
         : (
           <div className="placeholder-container">
@@ -277,6 +298,30 @@ function SummaryMetric() {
     },
   ];
 
+  const handleChartTypeChange = (e) => {
+    switch (switchChart) {
+      case 0:
+        setYearChartType(e.target.value);
+        break;
+      case 1:
+        setCompositionChartType(e.target.value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const getChartTypeValue = () => {
+    switch (switchChart) {
+      case 0:
+        return yearChartType;
+      case 1:
+        return compositionChartType;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="summaryContainer">
       <h1>Summary</h1>
@@ -302,6 +347,13 @@ function SummaryMetric() {
                         {chart.title}
                       </option>
                     ))}
+                  </select>
+                </label>
+                <label htmlFor="ChartType">
+                  Chart Type:
+                  <select name="ChartType" className="chartType" onChange={handleChartTypeChange} value={getChartTypeValue()}>
+                    <option value="bar">Bar</option>
+                    <option value="doughnut">Doughnut</option>
                   </select>
                 </label>
                 {charts[switchChart].option}
