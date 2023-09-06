@@ -1,6 +1,6 @@
 import './DetailData.css';
 import React, { useState, useEffect } from 'react';
-import { ColorRing } from 'react-loader-spinner';
+import { SpinnerDotted } from 'spinners-react';
 import getLocation from './getLocation';
 import getMeteorData from '../../services/publicAPI';
 import getDetailData from './getDetailData';
@@ -8,7 +8,7 @@ import getDetailData from './getDetailData';
 function DetailData() {
   // This state is for testing purposes only. It will be replaced by props later.
   const itemsPerPage = 10; // You can adjust this as needed
-  const [meteorData, setMeteorData] = useState(null);
+  const [meteorData, setMeteorData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [endIndex, setEndIndex] = useState(null);
   const [detailData, setDetailData] = useState(null);
@@ -17,10 +17,16 @@ function DetailData() {
   // Note - this might change - meteorData might be brought in via props
   useEffect(() => {
     async function fetchData() {
-      setLoading(true);
-      const data = await getMeteorData();
-      setMeteorData(data.slice(140, 155));
-      setLoading(false);
+      try {
+        setLoading(true);
+        const data = await getMeteorData();
+        setDetailData(data.slice(140, 155));
+        setMeteorData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchData();
   }, []);
@@ -63,28 +69,18 @@ function DetailData() {
     return [startIndex, newEndIndex];
   }
 
-  let renderedData = null;
-  if (loading) {
-    renderedData = (
-      <div className="sweet">
-        <ColorRing
-          visible
-          height="80"
-          width="80"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-        />
-      </div>
-    );
-  } else {
-    renderedData = detailData;
-  }
-
   return (
     <div className="detailContainer">
-      {detailData ? (
+      {loading ? (
+        <div className="sweet">
+          <SpinnerDotted
+            size={70}
+            thickness={100}
+            speed={100}
+            color="#36ad47"
+          />
+        </div>
+      ) : detailData.length > 0 ? (
         <div>
           <h1>Detail Data</h1>
           <div className="tableContainer">
