@@ -1,4 +1,5 @@
 import './DetailData.css';
+import { SpinnerDotted } from 'spinners-react';
 import React, { useState, useEffect } from 'react';
 import getMeteorData from '../../services/publicAPI';
 import getLocation from './getLocation';
@@ -92,9 +93,9 @@ function DetailData() {
 
   return (
     <div className="detailContainer">
+      <h2>Detail Data</h2>
       {tableData ? (
         <div>
-          <h1>Detail Data</h1>
           <div className="tableContainer">
             <table>
               <thead>
@@ -135,7 +136,16 @@ function DetailData() {
             <button disabled={endIndex >= meteorProps.length - 1} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
           </div>
         </div>
-      ) : (<p>Content loading...</p>)}
+      ) : (
+        <div className="sweet">
+          <SpinnerDotted
+            size={70}
+            thickness={100}
+            speed={100}
+            color="#36ad47"
+          />
+        </div>
+      )}
     </div>
   );
 }
