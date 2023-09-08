@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './header.css';
 import Fuse from 'fuse.js';
+import DoubleSlider from './DoubleSlider';
 import json from '../../../Meteorite_Landings.json';
 
 export default function Header() {
@@ -18,6 +19,14 @@ export default function Header() {
   const [sliderValue, setSliderValue] = useState(50);
   const handleSliderChange = (e) => {
     setSliderValue(e.target.value);
+  };
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(100);
+
+  // Additional function that uses min and max values
+  const handleMinMaxChange = (newMin, newMax) => {
+    setMin(newMin);
+    setMax(newMax);
   };
 
   const [data, setData] = useState(json);
@@ -220,7 +229,7 @@ export default function Header() {
               <div className="fieldGroup" id="range">
                 <label htmlFor="">Mass Range:</label>
 
-                <div className="sliderGroup">
+                {/* <div className="sliderGroup">
                   <input
                     type="range"
                     min="0"
@@ -229,7 +238,8 @@ export default function Header() {
                     className="rangeSlider"
                   />
                   <p className="sliderValue">{`${sliderValue} Meters`}</p>
-                </div>
+                </div> */}
+                <DoubleSlider min={min} max={max} />
               </div>
             </section>
           </section>
