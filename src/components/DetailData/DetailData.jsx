@@ -43,6 +43,7 @@ function DetailData() {
             location: 'Data unavailable',
           };
         }
+
         // If location data is memoized, use it
         if (locationMemo[id]) {
           return {
@@ -51,24 +52,34 @@ function DetailData() {
           };
         }
 
-        // Fetch the location data
+        // If Geolocation is okay and there is no locationMemo,
+        // fetch the location data!
 
+        // format the lat/long as a string with no quotes
         const formattedGeoLocation = GeoLocation.replace(/[()]/g, '');
 
         try {
+          // call the API, via the getLocation async function
           const locationData = await getLocation(formattedGeoLocation);
+
+          // create a placeholder state in case no state data comes back
           let state = 'State unknown';
+
+          // reset state if state data comes back
           if (locationData.addresses[0].state) {
             state = locationData.addresses[0].state;
           }
+
+          // Update the locationMemo with the fetched data
           setLocationMemo((prevLocationMemo) => ({
             ...prevLocationMemo,
             [id]: `${state}, ${locationData.addresses[0].country}`,
           }));
 
+          // return the fetched data
           return {
             ...meteor,
-            location: `${locationData.addresses.state}, ${locationData.addresses.country}`,
+            location: `${state}, ${locationData.addresses[0].country}`,
           };
         } catch (error) {
           // console.error('Error fetching location data:', error);
@@ -78,13 +89,12 @@ function DetailData() {
           };
         }
       });
-
       // Wait for all promises to resolve and then set table data
       Promise.all(updatedMeteors).then((result) => {
         setTableData(result);
       });
     }
-  }, [meteorProps, currentPage, locationMemo]);
+  }, [meteorProps, currentPage]);
 
   const handlePageChange = (pageNumber) => {
     const newPage = pageNumber;
