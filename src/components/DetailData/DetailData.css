@@ -1,7 +1,3 @@
-:root {
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  
   * {
     margin: 0;
     padding: 0;
@@ -12,21 +8,20 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
+    margin-block: 0.75rem;
     gap: 10px 0;
   }
 
   .tableContainer {
     margin: 10px auto;
     max-width: 800px;
-    padding: 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    box-shadow: 0px 3px 9px rgb(0, 0, 0, 0.1);
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
   }
   
   th, td {
@@ -48,28 +43,36 @@
   }
   
   tbody tr:hover {
-    background-color: #e0e0e0;
+    background-color: lightblue;
   }
   
   /* Style the buttons for Previous and Next */
-  button {
-    padding: 8px 16px;
-    background-color: #007bff;
+  .pgBtn {
     border: none;
-    border-radius: 4px;
-    color: white;
-    font-weight: bold;
+    border-radius: 0.3em;
+    padding: 0.5em 2em;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
     cursor: pointer;
+    box-shadow: 0px 3px 9px rgb(0, 0, 0, 0.2);
+    background: lightblue;
     transition: background-color 0.3s;
+    color: black;
+  }
+
+  .btn-previous{
+    background: lightcoral
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+    color: white;
   }
   
   button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
   }
   
   /* Center the page number span */
