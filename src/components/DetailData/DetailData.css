@@ -81,4 +81,10 @@
     margin: 0 10px;
     font-weight: bold;
   }
-  
+
+  /* Spinner */
+  .sweet {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+  }

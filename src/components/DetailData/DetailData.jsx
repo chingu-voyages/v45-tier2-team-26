@@ -139,10 +139,10 @@ function DetailData() {
       ) : (
         <div className="sweet">
           <SpinnerDotted
-            size={70}
+            size={150}
             thickness={100}
             speed={100}
-            color="#36ad47"
+            color="lightblue"
           />
         </div>
       )}
