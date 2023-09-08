@@ -127,13 +127,13 @@ function DetailData() {
             </table>
           </div>
           <div>
-            <button disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
+            <button className="pgBtn btn-previous" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
             <span>
               Page
               {' '}
               {currentPage}
             </span>
-            <button disabled={endIndex >= meteorProps.length - 1} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
+            <button className="pgBtn" disabled={endIndex >= meteorProps.length - 1} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
           </div>
         </div>
       ) : (
