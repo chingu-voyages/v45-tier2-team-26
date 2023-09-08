@@ -15,7 +15,8 @@
     "fuse.js": "^6.6.2",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "spinners-react": "^1.0.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.20",
