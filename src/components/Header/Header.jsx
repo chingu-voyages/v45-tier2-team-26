@@ -17,6 +17,18 @@ export default function Header() {
   };
 
   const [sliderValue, setSliderValue] = useState(50);
+  let minValue = 1;
+  let maxValue = 0;
+  for (let i = 0; i < json.length; i++) {
+    if (json[i].massgrams != null) {
+      if (json[i].massgrams < minValue) {
+        minValue = json[i].massgrams;
+      } else if (json[i].massgrams > maxValue) {
+        maxValue = json[i].massgrams;
+      }
+    }
+  }
+
   const handleSliderChange = (e) => {
     setSliderValue(e.target.value);
   };
@@ -159,8 +171,8 @@ export default function Header() {
                 <div className="sliderGroup">
                   <input
                     type="range"
-                    min="0"
-                    max="100"
+                    min="{minValue}"
+                    max="{maxValue}"
                     onChange={handleSliderChange}
                     className="rangeSlider"
                   />
@@ -232,8 +244,8 @@ export default function Header() {
                 {/* <div className="sliderGroup">
                   <input
                     type="range"
-                    min="0"
-                    max="100"
+                    min={minValue}
+                    max={maxValue}
                     onChange={handleSliderChange}
                     className="rangeSlider"
                   />
