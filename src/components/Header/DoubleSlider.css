@@ -2,12 +2,11 @@
   display: flex;
   flex-direction: column;
   width: 80%;
-  margin: 100px auto;
 }
 
 .sliders_control {
   position: relative;
-  min-height: 50px;
+  min-height: 15px;
 }
 
 .form_control {
@@ -51,7 +50,7 @@ input[type=range]::-webkit-slider-thumb:active {
 
 input[type="number"] {
   color: #8a8383;
-  width: 50px;
+  width: 120px;
   height: 30px;
   font-size: 20px;
   border: none;
@@ -105,3 +104,4 @@ input[type="range"] {
   cursor: pointer;
   margin-top: -8px;
 }
+
