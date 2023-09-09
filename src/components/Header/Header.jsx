@@ -118,7 +118,7 @@ export default function Header({ searchResults, setSearchResults }) {
     setComposition('');
     setMinMass(minValue);
     setMaxMass(maxValue);
-    setSearchResults([]);
+    setSearchResults(json);
 
     // Testing...
     console.log(

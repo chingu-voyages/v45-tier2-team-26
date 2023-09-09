@@ -9,7 +9,7 @@ function App() {
   //   console.log('loaded data', JSON.stringify(json));
   // });
 
-  const [searchResults, setSearchResults] = useState([json]);
+  const [searchResults, setSearchResults] = useState(json);
 
   return (
     <div className="App">
