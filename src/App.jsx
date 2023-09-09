@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       <Header searchResults={searchResults} setSearchResults={setSearchResults} />
       <DetailData searchResults={searchResults} />
-      {/* <SummaryMetric /> */}
+      {/* <SummaryMetric searchResults={searchResults} /> */}
     </div>
   );
 }

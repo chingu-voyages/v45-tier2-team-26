@@ -77,6 +77,7 @@ export default function Header({ searchResults, setSearchResults }) {
     setMinMass(minMass);
     setMaxMass(maxMass);
 
+    /* Ideally: perform search for each category, and then return intersection of all 4 lists */
     if (!(name || year || composition)) {
       filteredResults = json;
     } else {
