@@ -175,16 +175,6 @@ export default function Header({ searchResults, setSearchResults }) {
               <div className="fieldGroup mobileFieldGroup" id="range">
                 <label htmlFor="">Mass Range:</label>
 
-                {/* <div className="sliderGroup">
-                  <input
-                    type="range"
-                    min="{minValue}"
-                    max="{maxValue}"
-                    onChange={handleSliderChange}
-                    className="rangeSlider"
-                  />
-                  <p className="sliderValue">{`${sliderValue} Meters`}</p>
-                </div> */}
                 <DoubleSlider min={minMass} max={maxMass} />
               </div>
             </section>
@@ -249,16 +239,6 @@ export default function Header({ searchResults, setSearchResults }) {
               <div className="fieldGroup" id="range">
                 <label htmlFor="">Mass Range:</label>
 
-                {/* <div className="sliderGroup">
-                  <input
-                    type="range"
-                    min={minValue}
-                    max={maxValue}
-                    onChange={handleSliderChange}
-                    className="rangeSlider"
-                  />
-                  <p className="sliderValue">{`${sliderValue} Meters`}</p>
-                </div> */}
                 <DoubleSlider min={minMass} max={maxMass} />
               </div>
             </section>
