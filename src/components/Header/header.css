@@ -73,7 +73,9 @@ h1 {
 
 .inputFields {
     display: flex;
+    align-items: center;
     gap: 4em;
+    width: 50%;
 }
 
 #mobileInputFields {
