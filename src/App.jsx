@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import SummaryMetric from './components/SummaryMetric/SummaryMetric';
 import Header from './components/Header/Header';
 import json from '../Meteorite_Landings.json';
@@ -9,10 +9,12 @@ function App() {
   //   console.log('loaded data', JSON.stringify(json));
   // });
 
+  const [searchResults, setSearchResults] = useState([json]);
+
   return (
     <div className="App">
-      {/* <Header /> */}
-      <DetailData />
+      <Header searchResults={searchResults} setSearchResults={setSearchResults} />
+      <DetailData searchResults={searchResults} />
       {/* <SummaryMetric /> */}
     </div>
   );

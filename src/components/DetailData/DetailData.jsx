@@ -4,23 +4,26 @@ import React, { useState, useEffect } from 'react';
 import getMeteorData from '../../services/publicAPI';
 import getLocation from './getLocation';
 
-function DetailData() {
+function DetailData({ searchResults }) {
   const itemsPerPage = 10;
-  const [meteorProps, setMeteorProps] = useState(null); // this will be removed when we have props
+  // const [meteorProps, setMeteorProps] = useState(null); // this will be removed when we have props
   const [currentPage, setCurrentPage] = useState(1);
   const [endIndex, setEndIndex] = useState(null);
   const [tableData, setTableData] = useState(null);
   const [locationMemo, setLocationMemo] = useState({});
 
   // Note - planning for meteor data to be brought in via props.
-  useEffect(() => {
-    // this will be removed when we have props
-    async function fetchData() {
-      const data = await getMeteorData();
-      setMeteorProps(data);
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   // this will be removed when we have props
+  //   async function fetchData() {
+  //     const data = await getMeteorData();
+  //     setMeteorProps(data);
+  //   }
+  //   fetchData();
+  // }, []);
+
+  const meteorProps = searchResults;
+  // console.log(JSON.stringify(searchResults));
 
   useEffect(() => {
     if (meteorProps) {

@@ -4,7 +4,7 @@ import Fuse from 'fuse.js';
 import DoubleSlider from './DoubleSlider';
 import json from '../../../Meteorite_Landings.json';
 
-export default function Header() {
+export default function Header({ searchResults, setSearchResults }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleHideMenu = () => {
     console.log('hide menu');
@@ -20,11 +20,11 @@ export default function Header() {
   let minValue = 1;
   let maxValue = 0;
   for (let i = 0; i < json.length; i++) {
-    if (json[i].massgrams != null) {
-      if (json[i].massgrams < minValue) {
-        minValue = json[i].massgrams;
-      } else if (json[i].massgrams > maxValue) {
-        maxValue = json[i].massgrams;
+    if (json[i]['mass (g)'] != null) {
+      if (json[i]['mass (g)'] < minValue) {
+        minValue = json[i]['mass (g)'];
+      } else if (json[i]['mass (g)'] > maxValue) {
+        maxValue = json[i]['mass (g)'];
       }
     }
   }
@@ -32,23 +32,23 @@ export default function Header() {
   const handleSliderChange = (e) => {
     setSliderValue(e.target.value);
   };
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(100);
-
-  // Additional function that uses min and max values
-  const handleMinMaxChange = (newMin, newMax) => {
-    setMin(newMin);
-    setMax(newMax);
-  };
 
   const [data, setData] = useState(json);
   const [results, setResults] = useState(json);
   const [name, setName] = useState('');
   const [year, setYear] = useState('');
   const [composition, setComposition] = useState('');
+  const [minMass, setMinMass] = useState(minValue);
+  const [maxMass, setMaxMass] = useState(maxValue);
+
+  // Additional function that uses min and max values
+  const handleMinMaxChange = (newMin, newMax) => {
+    setMinMass(newMin);
+    setMaxMass(newMax);
+  };
 
   // Should pass searchResults as props to other components later...
-  let searchResults = json;
+  let filteredResults = json;
 
   /* IF USING PUBLIC API, USE THIS */
   // useEffect(() => {
@@ -73,10 +73,12 @@ export default function Header() {
     setName(name);
     setYear(year);
     setComposition(composition);
-    // setMassRange(massRange); will be trickier...
+    // Change minValue & maxValue when DoubleSlider works...
+    setMinMass(minMass);
+    setMaxMass(maxMass);
 
     if (!(name || year || composition)) {
-      searchResults = json;
+      filteredResults = json;
     } else {
       const fuse = new Fuse(data, {
         keys: ['name', 'year', 'composition'],
@@ -96,12 +98,14 @@ export default function Header() {
       // If .csv format: [{'name': name1, 'recclass': recclass1, 'mass': mass1, 'year': 1970, ...}]
       // Note format of 'year', if using PUBLIC API 'year' would format to 1970-01-01T00:00:00.000
 
-      searchResults = fuseResults.map((fuseResult) => fuseResult.item);
+      filteredResults = fuseResults.map((fuseResult) => fuseResult.item);
     }
+
+    setSearchResults(filteredResults);
 
     console.log(
       `Query entered: name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${JSON.stringify(
-        searchResults,
+        filteredResults,
       )}\nDone!`,
     );
   };
@@ -112,12 +116,14 @@ export default function Header() {
     setName('');
     setYear('');
     setComposition('');
-    // setMassRange(); should result to default position...
+    setMinMass(minValue);
+    setMaxMass(maxValue);
+    setSearchResults([]);
 
     // Testing...
     console.log(
       `Clear clicked! name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${JSON.stringify(
-        searchResults,
+        filteredResults,
       )}\nDone!`,
     );
   };
@@ -251,7 +257,7 @@ export default function Header() {
                   />
                   <p className="sliderValue">{`${sliderValue} Meters`}</p>
                 </div> */}
-                <DoubleSlider min={min} max={max} />
+                <DoubleSlider min={minMass} max={maxMass} />
               </div>
             </section>
           </section>
