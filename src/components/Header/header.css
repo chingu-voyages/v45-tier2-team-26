@@ -74,6 +74,7 @@ h1 {
 .inputFields {
     display: flex;
     gap: 4em;
+    width: 50%;
 }
 
 #mobileInputFields {
@@ -83,6 +84,7 @@ h1 {
 
 input {
     padding: 0.2em;
+    width: 100%;
 }
 
 label {
@@ -95,14 +97,14 @@ label {
 .columnGroup {
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    gap: 0.5em;
     width: 100%;
 }
 
 .fieldGroup {
     display: flex;
+    flex-direction: column;
     gap: 0.5em;
-    justify-content: center;
 }
 
 .mobileFieldGroup {
@@ -142,6 +144,10 @@ label {
 
 .rangeSlider {
     cursor: pointer;
+}
+
+#range {
+    gap: 1em;
 }
 
 .sliderGroup {

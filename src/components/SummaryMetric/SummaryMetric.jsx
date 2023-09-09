@@ -4,7 +4,7 @@ import getMeteoriteData from '../../services/publicAPI';
 import DataChart from './DataChart';
 import compositionGroup from './compositionGroup';
 
-function SummaryMetric() {
+function SummaryMetric({ searchResults }) {
   // This state is for testing purposes only. It will be replaced by props later.
   const [meteoriteData, setMeteoriteData] = useState(null);
   const [switchChart, setSwishChart] = useState(0);
