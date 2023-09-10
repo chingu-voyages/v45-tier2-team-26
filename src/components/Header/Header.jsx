@@ -16,7 +16,6 @@ export default function Header({ searchResults, setSearchResults }) {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const [sliderValue, setSliderValue] = useState(50);
   let minValue = 1;
   let maxValue = 0;
   for (let i = 0; i < json.length; i++) {
@@ -28,10 +27,8 @@ export default function Header({ searchResults, setSearchResults }) {
       }
     }
   }
-
-  const handleSliderChange = (e) => {
-    setSliderValue(e.target.value);
-  };
+  // minValue=0;
+  // maxValue=60000000;
 
   const [data, setData] = useState(json);
   const [results, setResults] = useState(json);
@@ -69,16 +66,14 @@ export default function Header({ searchResults, setSearchResults }) {
   };
 
   const handleSearch = () => {
-    // Takes query at Name/Year/Composition box and searches through JSON file for matches
     setName(name);
     setYear(year);
     setComposition(composition);
-    // Change minValue & maxValue when DoubleSlider works...
     setMinMass(minMass);
     setMaxMass(maxMass);
 
-    /* Ideally: perform search for each category, and then return intersection of all 4 lists */
-    if (!(name || year || composition)) {
+    /* Ideally: perform search for each category, and then return intersection of all 4 results */
+    if (!(name || year || composition || minMass !== minValue || maxMass !== maxValue)) {
       filteredResults = json;
     } else {
       const fuse = new Fuse(data, {
@@ -86,18 +81,10 @@ export default function Header({ searchResults, setSearchResults }) {
         includeMatches: true,
         threshold: 0.3,
       });
-      const fuseResults = fuse.search(name + year + composition);
+      const fuseResults = fuse.search(name + year + composition); // Lazy search method, will improve later
 
       // Not sure why, but this is needed so that Clear button function works properly
       setResults(fuseResults);
-
-      // For testing...
-      // printResults to see full Fuse returned object, including ranking scores, criteria, etc.
-      // Uncomment below & replace stringified searchResults with just printResults in console.log
-      // const printResults = JSON.stringify(fuseResults, null, 2);
-
-      // If .csv format: [{'name': name1, 'recclass': recclass1, 'mass': mass1, 'year': 1970, ...}]
-      // Note format of 'year', if using PUBLIC API 'year' would format to 1970-01-01T00:00:00.000
 
       filteredResults = fuseResults.map((fuseResult) => fuseResult.item);
     }
@@ -105,7 +92,7 @@ export default function Header({ searchResults, setSearchResults }) {
     setSearchResults(filteredResults);
 
     console.log(
-      `Query entered: name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${JSON.stringify(
+      `Query entered: name = ${name}, year = ${year}, composition = ${composition}, min=${minMass}, max=${maxMass}\nData found:\n ${JSON.stringify(
         filteredResults,
       )}\nDone!`,
     );
@@ -123,7 +110,7 @@ export default function Header({ searchResults, setSearchResults }) {
 
     // Testing...
     console.log(
-      `Clear clicked! name = ${name}, year = ${year}, composition = ${composition}\nData found:\n ${JSON.stringify(
+      `Clear clicked! name = ${name}, year = ${year}, composition = ${composition}, min=${minMass}, max=${maxMass}\nData found:\n ${JSON.stringify(
         filteredResults,
       )}\nDone!`,
     );
@@ -175,7 +162,7 @@ export default function Header({ searchResults, setSearchResults }) {
               <div className="fieldGroup mobileFieldGroup" id="range">
                 <label htmlFor="">Mass Range:</label>
 
-                <DoubleSlider min={minMass} max={maxMass} />
+                <DoubleSlider min={minMass} max={maxMass} setMin={setMinMass} setMax={setMaxMass} />
               </div>
             </section>
           </section>
@@ -239,7 +226,7 @@ export default function Header({ searchResults, setSearchResults }) {
               <div className="fieldGroup" id="range">
                 <label htmlFor="">Mass Range:</label>
 
-                <DoubleSlider min={minMass} max={maxMass} />
+                <DoubleSlider min={minMass} max={maxMass} setMin={setMinMass} setMax={setMaxMass} />
               </div>
             </section>
           </section>

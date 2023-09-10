@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './DoubleSlider.css';
 
-function DoubleSlider({ min, max }) {
+function DoubleSlider({
+  min, max, setMin, setMax,
+}) {
   const [leftValue, setLeftValue] = useState(min);
   const [rightValue, setRightValue] = useState(max);
 
@@ -10,6 +12,8 @@ function DoubleSlider({ min, max }) {
     if (leftValue > rightValue) {
       setLeftValue(rightValue);
     }
+    // setMin(leftValue);
+    // setMax(rightValue);
     updateBackground();
   }, [leftValue, rightValue]);
 
