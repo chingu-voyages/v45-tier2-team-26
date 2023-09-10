@@ -44,9 +44,6 @@ export default function Header({ searchResults, setSearchResults }) {
     setMaxMass(newMax);
   };
 
-  // Should pass searchResults as props to other components later...
-  let filteredResults = json;
-
   /* IF USING PUBLIC API, USE THIS */
   // useEffect(() => {
   //   fetch('https://data.nasa.gov/resource/gh4g-9sfh.json')
@@ -60,6 +57,25 @@ export default function Header({ searchResults, setSearchResults }) {
     setData(json);
   }, []);
 
+  // Should pass searchResults as props to other components later...
+  let filteredResults = data;
+
+  function findIntersectionById(arr1, arr2, arr3, arr4) {
+    // Create sets of unique IDs for each array
+    const set1 = new Set(arr1.map((obj) => obj.id));
+    const set2 = new Set(arr2.map((obj) => obj.id));
+    const set3 = new Set(arr3.map((obj) => obj.id));
+    const set4 = new Set(arr4.map((obj) => obj.id));
+
+    // Find the intersection of IDs between all sets
+    const intersection = Array.from(set1).filter((id) => set2.has(id) && set3.has(id) && set4.has(id));
+
+    // Create an array of objects with matching IDs
+    const result = arr1.filter((obj) => intersection.includes(obj.id));
+
+    return result;
+  }
+
   // Possibly add debouncer later to improve performance
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -72,21 +88,42 @@ export default function Header({ searchResults, setSearchResults }) {
     setMinMass(minMass);
     setMaxMass(maxMass);
 
-    /* Ideally: perform search for each category, and then return intersection of all 4 results */
+    let nameSet = data;
+    let yearSet = data;
+    let compositionSet = data;
+    let massRangeSet = data;
+
     if (!(name || year || composition || minMass !== minValue || maxMass !== maxValue)) {
-      filteredResults = json;
+      filteredResults = data;
     } else {
-      const fuse = new Fuse(data, {
-        keys: ['name', 'year', 'composition'],
-        includeMatches: true,
-        threshold: 0.3,
-      });
-      const fuseResults = fuse.search(name + year + composition); // Lazy search method, will improve later
+      if (name) {
+        const fuse = new Fuse(data, {
+          keys: ['name'],
+          includeMatches: true,
+          threshold: 0.3,
+        });
+        const fuseResults = fuse.search(name);
 
-      // Not sure why, but this is needed so that Clear button function works properly
-      setResults(fuseResults);
+        // Not sure why, but this is needed so that Clear button function works properly
+        setResults(fuseResults);
 
-      filteredResults = fuseResults.map((fuseResult) => fuseResult.item);
+        nameSet = fuseResults.map((fuseResult) => fuseResult.item);
+      }
+
+      if (year) {
+        yearSet = data.filter((obj) => String(obj.year) === year);
+      }
+
+      // Composition search can still be improved, maybe make use of compositionGroup.js later?
+      if (composition) {
+        compositionSet = data.filter((obj) => obj.recclass.toUpperCase().includes(composition.toUpperCase()));
+      }
+
+      if (minMass !== minValue || maxMass !== maxValue) {
+        massRangeSet = data.filter((obj) => (obj['mass (g)'] >= minMass && obj['mass (g)'] <= maxMass));
+      }
+
+      filteredResults = findIntersectionById(nameSet, yearSet, compositionSet, massRangeSet);
     }
 
     setSearchResults(filteredResults);
@@ -106,7 +143,7 @@ export default function Header({ searchResults, setSearchResults }) {
     setComposition('');
     setMinMass(minValue);
     setMaxMass(maxValue);
-    setSearchResults(json);
+    setSearchResults(data);
 
     // Testing...
     console.log(
