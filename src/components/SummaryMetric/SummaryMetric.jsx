@@ -12,14 +12,14 @@ import {
   getNumberOfStrikesData,
 } from './summaryHelper';
 
-function SummaryMetric() {
+function SummaryMetric({ searchResults }) {
   // This state is for testing purposes only. It will be replaced by props later.
-  const [meteoriteData, setMeteoriteData] = useState(null);
+  // const [meteoriteData, setMeteoriteData] = useState(null);
   const [switchChart, setSwitchChart] = useState(0);
-  useEffect(() => {
-    // console.log('testing');
-    getMeteoriteData().then((data) => setMeteoriteData(data.slice(0)));
-  }, []);
+  // useEffect(() => {
+  //   // console.log('testing');
+  //   getMeteoriteData().then((data) => setMeteoriteData(data.slice(0)));
+  // }, []);
 
   // console.log('switchChart', switchChart);
 
@@ -36,15 +36,15 @@ function SummaryMetric() {
   const [yearChartType, setYearChartType] = useState('bar');
   const [compositionChartType, setCompositionChartType] = useState('doughnut');
 
-  const total = useMemo(() => getTotalStrikes(meteoriteData), [meteoriteData]);
-  const average = useMemo(() => getAverageMass(meteoriteData)?.toFixed(2), [meteoriteData]);
+  const total = useMemo(() => getTotalStrikes(searchResults), [searchResults]);
+  const average = useMemo(() => getAverageMass(searchResults)?.toFixed(2), [searchResults]);
   const numberByYearChartData = useMemo(
-    () => getNumberOfStrikesByYear(meteoriteData, numberByYearStep),
-    [meteoriteData, numberByYearStep],
+    () => getNumberOfStrikesByYear(searchResults, numberByYearStep),
+    [searchResults, numberByYearStep],
   );
   const numberByComposition = useMemo(
-    () => getNumberOfStrikesByComposition(meteoriteData),
-    [meteoriteData],
+    () => getNumberOfStrikesByComposition(searchResults),
+    [searchResults],
   );
   const groupedNumberByComposition = useMemo(
     () => getGroupedNumberByComposition(compositionGroup, numberByComposition),
@@ -236,7 +236,7 @@ function SummaryMetric() {
         {` ${average || 'N/A'} (g)`}
       </p>
       <div className="chart">
-        {meteoriteData?.length > 0
+        {searchResults?.length > 0
           ? (
             <>
               <div className="chartTitleContainer">
