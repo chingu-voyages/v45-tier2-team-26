@@ -36,7 +36,7 @@ function SummaryMetric({ searchResults }) {
   const [yearChartType, setYearChartType] = useState('bar');
   const [compositionChartType, setCompositionChartType] = useState('doughnut');
 
-  const total = useMemo(() => (getTotalStrikes(searchResults)));
+  const total = getTotalStrikes(searchResults);
   const average = useMemo(() => getAverageMass(searchResults)?.toFixed(2), [searchResults]);
   const numberByYearChartData = useMemo(
     () => getNumberOfStrikesByYear(searchResults, numberByYearStep),
@@ -46,14 +46,9 @@ function SummaryMetric({ searchResults }) {
     () => getNumberOfStrikesByComposition(searchResults),
     [searchResults],
   );
-  const groupedNumberByComposition = useMemo(
-    () => getGroupedNumberByComposition(compositionGroup, numberByComposition),
-    [numberByComposition],
-  );
-  const numberByCompositionChartData = useMemo(
-    () => getNumberByCompositionChartData(groupedNumberByComposition, numberByCompositionType),
-    [groupedNumberByComposition, numberByCompositionType],
-  );
+  const groupedNumberByComposition = getGroupedNumberByComposition(compositionGroup, numberByComposition);
+
+  const numberByCompositionChartData = getNumberByCompositionChartData(groupedNumberByComposition, numberByCompositionType);
 
   // Abstract the following functions from charts array to make the code more readable
   const getYearChartElement = (numberByYearChartData, yearChartType) => {

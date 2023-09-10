@@ -1,10 +1,10 @@
-import {expect, test, describe} from 'vitest'
+import { expect, test, describe } from 'vitest'
 import {getTotalStrikes,
-    getAverageMass,
-    getNumberOfStrikesByYear,
-    getNumberOfStrikesByComposition,
-    getGroupedNumberByComposition,
-    getNumberByCompositionChartData,
+  getAverageMass,
+  getNumberOfStrikesByYear,
+  getNumberOfStrikesByComposition,
+  getGroupedNumberByComposition,
+  getNumberByCompositionChartData,
 } from './summaryHelper.js'
 
 import compositionGroup from './compositionGroup.js';
