@@ -1,6 +1,6 @@
 import './SummaryMetric.css';
 import { useState, useEffect, useMemo } from 'react';
-import getMeteoriteData from '../../services/publicAPI';
+// import getMeteoriteData from '../../services/publicAPI';
 import DataChart from './DataChart';
 import compositionGroup from './compositionGroup';
 import {
@@ -9,7 +9,7 @@ import {
   getNumberOfStrikesByYear,
   getNumberOfStrikesByComposition,
   getGroupedNumberByComposition,
-  getNumberOfStrikesData,
+  getNumberByCompositionChartData,
 } from './summaryHelper';
 
 function SummaryMetric({ searchResults }) {
@@ -36,7 +36,7 @@ function SummaryMetric({ searchResults }) {
   const [yearChartType, setYearChartType] = useState('bar');
   const [compositionChartType, setCompositionChartType] = useState('doughnut');
 
-  const total = useMemo(() => getTotalStrikes(searchResults), [searchResults]);
+  const total = useMemo(() => (getTotalStrikes(searchResults)));
   const average = useMemo(() => getAverageMass(searchResults)?.toFixed(2), [searchResults]);
   const numberByYearChartData = useMemo(
     () => getNumberOfStrikesByYear(searchResults, numberByYearStep),
@@ -51,7 +51,7 @@ function SummaryMetric({ searchResults }) {
     [numberByComposition],
   );
   const numberByCompositionChartData = useMemo(
-    () => getNumberOfStrikesData(groupedNumberByComposition, numberByCompositionType),
+    () => getNumberByCompositionChartData(groupedNumberByComposition, numberByCompositionType),
     [groupedNumberByComposition, numberByCompositionType],
   );
 

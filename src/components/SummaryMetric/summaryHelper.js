@@ -1,11 +1,11 @@
-export const getTotalStrikes = (meteoriteData) => {
+const getTotalStrikes = (meteoriteData) => {
   if (!meteoriteData) {
     return null;
   }
   return meteoriteData.length;
 };
 
-export const getAverageMass = (meteoriteData) => {
+const getAverageMass = (meteoriteData) => {
   if (!meteoriteData || meteoriteData?.length === 0) {
     return null;
   }
@@ -47,7 +47,7 @@ export const getAverageMass = (meteoriteData) => {
 //   return parsedYear;
 // };
 
-export const getNumberOfStrikesByYear = (meteoriteData, step) => {
+const getNumberOfStrikesByYear = (meteoriteData, step) => {
   if (!meteoriteData || meteoriteData?.length === 0) {
     return null;
   }
@@ -79,7 +79,7 @@ export const getNumberOfStrikesByYear = (meteoriteData, step) => {
   return numberOfStrikesByYear;
 };
 
-export const getNumberOfStrikesByComposition = (meteoriteData) => {
+const getNumberOfStrikesByComposition = (meteoriteData) => {
   if (!meteoriteData || meteoriteData?.length === 0) {
     return null;
   }
@@ -99,7 +99,7 @@ export const getNumberOfStrikesByComposition = (meteoriteData) => {
   return numberOfStrikesByComposition;
 };
 
-export const getGroupedNumberByComposition = (compositionGroup, numberOfStrikesByComposition) => {
+const getGroupedNumberByComposition = (compositionGroup, numberOfStrikesByComposition) => {
   if (!numberOfStrikesByComposition) {
     return null;
   }
@@ -122,7 +122,7 @@ export const getGroupedNumberByComposition = (compositionGroup, numberOfStrikesB
   return groupedComposition;
 };
 
-export const getNumberOfStrikesData = (groupedStrikes, numberByCompositionType) => {
+const getNumberByCompositionChartData = (groupedStrikes, numberByCompositionType) => {
   if (!groupedStrikes) {
     return null;
   }
@@ -140,25 +140,34 @@ export const getNumberOfStrikesData = (groupedStrikes, numberByCompositionType) 
         acc[group] = subGroupTotal;
         return acc;
       }, {});
-    case 'Carbonaceous chondrites':
-      return groupedStrikes['Carbonaceous chondrites'];
-    case 'Enstatite chondrites':
-      return groupedStrikes['Enstatite chondrites'];
-    case 'Ordinary chondrites':
-      return groupedStrikes['Ordinary chondrites'];
-    case 'Kakangari chondrites':
-      return groupedStrikes['Kakangari chondrites'];
-    case 'Primitive achondrites':
-      return groupedStrikes['Primitive achondrites'];
-    case 'Achondrites':
-      return groupedStrikes.Achondrites;
-    case 'Stony-iron':
-      return groupedStrikes['Stony-iron'];
-    case 'Iron':
-      return groupedStrikes.Iron;
-    case 'Unknown':
-      return groupedStrikes.Unknown;
+    case 'Carbonaceous chondrites CC':
+      return groupedStrikes['Carbonaceous chondrites CC'];
+    case 'Enstatite chondrites EC':
+      return groupedStrikes['Enstatite chondrites EC'];
+    case 'Ordinary chondrites OC':
+      return groupedStrikes['Ordinary chondrites OC'];
+    case 'Kakangari chondrites KC':
+      return groupedStrikes['Kakangari chondrites KC'];
+    case 'Primitive achondrites PA':
+      return groupedStrikes['Primitive achondrites PA'];
+    case 'Achondrites AC':
+      return groupedStrikes['Achondrites AC'];
+    case 'Stony-iron SI':
+      return groupedStrikes['Stony-iron SI'];
+    case 'Iron IR':
+      return groupedStrikes['Iron IR'];
+    case 'Unknown UN':
+      return groupedStrikes['Unknown UN'];
     default:
       return null;
   }
+};
+
+export {
+  getAverageMass,
+  getTotalStrikes,
+  getNumberOfStrikesByYear,
+  getNumberOfStrikesByComposition,
+  getGroupedNumberByComposition,
+  getNumberByCompositionChartData,
 };

@@ -31,8 +31,9 @@ function DataChart({
           const sum = context.dataset.data.reduce((acc, curr) => acc + curr, 0);
           const percentage = Math.round((value / sum) * 100);
           if (percentage > 2) {
-            const label = context.chart.data.labels[context.dataIndex];
-            return `${label} ${percentage}%`;
+            const dataLabels = context.chart.data.labels[context.dataIndex].split(' ');
+            const shortLabel = dataLabels[dataLabels.length - 1];
+            return `${shortLabel} ${percentage}%`;
           }
           return null;
         },
