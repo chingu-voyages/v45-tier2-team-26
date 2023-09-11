@@ -140,22 +140,22 @@ function DetailData({ searchResults }) {
             </table>
           </div>
           <div>
-            <button disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
+            <button className="pgBtn btn-previous" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
             <span>
               Page
               {' '}
               {currentPage}
             </span>
-            <button disabled={endIndex >= meteorProps.length - 1} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
+            <button className="pgBtn" disabled={endIndex >= meteorProps.length - 1} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
           </div>
         </div>
       ) : (
         <div className="sweet">
           <SpinnerDotted
-            size={70}
+            size={150}
             thickness={100}
             speed={100}
-            color="#36ad47"
+            color="lightblue"
           />
         </div>
       )}
