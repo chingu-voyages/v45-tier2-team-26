@@ -1,29 +1,16 @@
 import './DetailData.css';
 import { SpinnerDotted } from 'spinners-react';
 import React, { useState, useEffect } from 'react';
-import getMeteorData from '../../services/publicAPI';
 import getLocation from './getLocation';
 
 function DetailData({ searchResults }) {
   const itemsPerPage = 10;
-  // const [meteorProps, setMeteorProps] = useState(null); // this will be removed when we have props
   const [currentPage, setCurrentPage] = useState(1);
   const [endIndex, setEndIndex] = useState(null);
   const [tableData, setTableData] = useState(null);
   const [locationMemo, setLocationMemo] = useState({});
 
-  // Note - planning for meteor data to be brought in via props.
-  // useEffect(() => {
-  //   // this will be removed when we have props
-  //   async function fetchData() {
-  //     const data = await getMeteorData();
-  //     setMeteorProps(data);
-  //   }
-  //   fetchData();
-  // }, []);
-
   const meteorProps = searchResults;
-  // console.log(JSON.stringify(searchResults));
 
   useEffect(() => {
     if (meteorProps) {
@@ -140,13 +127,13 @@ function DetailData({ searchResults }) {
             </table>
           </div>
           <div>
-            <button className="pgBtn btn-previous" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
+            <button className="pgBtn btn-previous" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)} type="button">Previous</button>
             <span>
               Page
               {' '}
               {currentPage}
             </span>
-            <button className="pgBtn" disabled={endIndex >= meteorProps.length - 1} onClick={() => handlePageChange(currentPage + 1)}>Next</button>
+            <button className="pgBtn" disabled={endIndex >= meteorProps.length - 1} onClick={() => handlePageChange(currentPage + 1)} type="button">Next</button>
           </div>
         </div>
       ) : (
