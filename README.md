@@ -1,28 +1,44 @@
-# voyage-tasks
+## FireBall
 
-Your project's `readme` is as important to success as your code. For 
-this reason you should put as much care into its creation and maintenance
-as you would any other component of the application.
+# Overview
 
-If you are unsure of what should go into the `readme` let this article,
-written by an experienced Chingu, be your starting point - 
-[Keys to a well written README](https://tinyurl.com/yk3wubft).
+[NASA's Open Data Portal](https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh) hosts a comprehensive data set from The Meteoritical Society, containing information on all known meteorite landings. The FireBall app allows the user to search and visualize these data.
 
-And before we go there's "one more thing"! Once you decide what to include
-in your `readme` feel free to replace the text we've provided here.
+LIVE LINK: 
 
-> Own it & Make it your Own!
+This app was created as part of [Chingu Voyage 45, Tier 2](https://github.com/chingu-voyages/voyage-project-tier2-fireball).
 
-## Team Documents
+# Features
 
-You may find these helpful as you work together to organize your project.
+- The search bar is built with fuse.js. The user can search the data by any of the following:
+    - Name
+    - Year of strike
+    - Meteorite composition
+    - Mass range (low to high, inclusive)
 
-- [Team Project Ideas](./docs/team_project_ideas.md)
-- [Team Decision Log](./docs/team_decision_log.md)
+- The search results are shown in two formats:
+    1. A detailed data table. 
+        - The table shows information for 10 meteorites at a time and allows the user to advance back and forth through the data. 
+        - The detailed data table dynamically converts the logitude and latitude of the meteorite landing into a location name using the Radar API's reverse geocoding functionality.
+    1. Summary metrics.
+        - Includes the total number of strikes and the average mass of the strikes.
+        - Shows a graphical display for the number of strikes by year and the number of strikes by meteorite composition. The graphs are built using the Chart.js library.
 
-Meeting Agenda templates (located in the `/docs` directory in this repo):
+- The app is responsive. At smaller screen sizes:
+    - The search bar is placed inside a drawer that can be accessed via a hamburger menu. 
+    - The detailed data table shifts to a vertical format.
 
-- Meeting - Voyage Kickoff --> ./docs/meeting-voyage_kickoff.docx
-- Meeting - App Vision & Feature Planning --> ./docs/meeting-vision_and_feature_planning.docx
-- Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
-- Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
+# Setting up a local version
+
+From the repo:
+1. Clone the project to your Github repositories and open it in your local development environment.
+1. Install required dependencies. `npm install`
+1. Run the project locally! `npm run dev`
+
+# Main Dev Dependencies
+
+- [Chart.js](https://github.com/chartjs/Chart.js)
+- [Fuse.js](https://github.com/krisk/Fuse)
+- [ESLint] (https://github.com/eslint/eslint)
+- [Vite] (https://github.com/vitejs/vite) 
+
