@@ -45,6 +45,57 @@
   tbody tr:hover {
     background-color: lightblue;
   }
+
+  /* Media queries for the table */
+@media screen and (max-width: 760px) {
+  .tableContainer{
+    max-height: 520px;
+    overflow-y: scroll;
+  }
+
+  table, thead, tbody, th, td, tr {
+    display: block
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+    font-weight: bold;
+	}
+	
+	/*
+	Label the data
+	*/
+	td:nth-of-type(1):before { content: "Name"; }
+	td:nth-of-type(2):before { content: "ID"; }
+	td:nth-of-type(3):before { content: "Composition"; }
+	td:nth-of-type(4):before { content: "Mass (g)"; }
+	td:nth-of-type(5):before { content: "Year"; }
+	td:nth-of-type(6):before { content: "Latitude"; }
+	td:nth-of-type(7):before { content: "Longitude"; }
+	td:nth-of-type(8):before { content: "State, Country"; }
+
+}
   
   /* Style the buttons for Previous and Next */
   .pgBtn {
