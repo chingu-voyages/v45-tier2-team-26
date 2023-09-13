@@ -11,10 +11,10 @@ This app was created as part of [Chingu Voyage 45, Tier 2](https://github.com/ch
 ## Features
 
 - The search bar is built with fuse.js. The user can search the data by any of the following:
-        - Name
-        - Year of strike
-        - Meteorite composition
-        - Mass range (low to high, inclusive)
+    - Name
+    - Year of strike
+    - Meteorite composition
+    - Mass range (low to high, inclusive)
 
 - The search results are shown in two formats:
     1. A detailed data table. 
