@@ -10,10 +10,20 @@ function App() {
   // });
 
   const [searchResults, setSearchResults] = useState(json);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handlePageChange = () => {
+    setCurrentPage(1);
+  };
 
   return (
     <div className="App">
-      <Header searchResults={searchResults} setSearchResults={setSearchResults} />
+      <Header
+        searchResults={searchResults}
+        setSearchResults={setSearchResults}
+        currentPage={currentPage}
+        handlePageChange={handlePageChange}
+      />
       <DetailData searchResults={searchResults} />
       {/* <SummaryMetric searchResults={searchResults} /> */}
     </div>
