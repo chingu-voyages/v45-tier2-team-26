@@ -30,15 +30,57 @@ This app was created as part of [Chingu Voyage 45, Tier 2](https://github.com/ch
 
 ## Setting up a local version
 
-From the repo:
-1. Clone the project to your Github repositories and open it in your local development environment.
-1. Install required dependencies. `npm install`
-1. Run the project locally! `npm run dev`
+Clone the project
 
-## Main Dependencies
+```bash
+  git clone https://github.com/chingu-voyages/v45-tier2-team-26.git
+```
 
-- [Chart.js](https://github.com/chartjs/Chart.js)
-- [Fuse.js](https://github.com/krisk/Fuse)
-- [ESLint](https://github.com/eslint/eslint)
-- [Vite](https://github.com/vitejs/vite) 
+Go to the project directory
 
+```bash
+  cd v45-tier2-team-26
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
+
+## Dependencies
+
+- [chart.js](https://www.npmjs.com/package/chart.js) v3.7.0
+- [chartjs-plugin-datalabels](https://www.npmjs.com/package/chartjs-plugin-datalabels) v2.2.0
+- [fuse.js](https://www.npmjs.com/package/fuse.js) v6.6.2
+- [react](https://www.npmjs.com/package/react) v18.2.0
+- [react-chartjs-2](https://www.npmjs.com/package/react-chartjs-2) v5.2.0
+- [react-dom](https://www.npmjs.com/package/react-dom) v18.2.0
+- [spinners-react](https://www.npmjs.com/package/spinners-react) v1.0.7
+
+## Dev Dependencies
+
+- [@types/react](https://www.npmjs.com/package/@types/react) v18.2.20
+- [@types/react-dom](https://www.npmjs.com/package/@types/react-dom) v18.2.7
+- [@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react) v4.0.4
+- [eslint](https://www.npmjs.com/package/eslint) v8.47.0
+- [eslint-config-airbnb](https://www.npmjs.com/package/eslint-config-airbnb) v19.0.4
+- [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) v2.28.0
+- [eslint-plugin-jsx-a11y](https://www.npmjs.com/package/eslint-plugin-jsx-a11y) v6.7.1
+- [eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react) v7.33.1
+- [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks) v4.6.0
+- [vite](https://www.npmjs.com/package/vite) v4.4.9
+- [vite-plugin-eslint2](https://www.npmjs.com/package/vite-plugin-eslint2) v4.0.0
+
+## Acknowledgements
+- The meteorite landings dataset we used is provided by [NASA's Open Data Portal](https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh).
+- Special thanks to [Chingu](https://www.chingu.io/) for their support and resources throughout the development of this project.
+
+## Licence
+[MIT](https://choosealicense.com/licenses/mit/)
