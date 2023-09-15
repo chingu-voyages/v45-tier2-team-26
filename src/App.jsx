@@ -16,15 +16,22 @@ function App() {
     setCurrentPage(1);
   };
 
+  const handlePageChange = (pageNumber) => {
+    const newPage = pageNumber;
+    setCurrentPage(newPage);
+  };
+
   return (
     <div className="App">
       <Header
-        searchResults={searchResults}
         setSearchResults={setSearchResults}
-        currentPage={currentPage}
-        resetPages={setCurrentPage}
+        resetPages={resetPages}
       />
-      <DetailData searchResults={searchResults} />
+      <DetailData
+        searchResults={searchResults}
+        currentPage={currentPage}
+        handlePageChange={handlePageChange}
+      />
       {/* <SummaryMetric searchResults={searchResults} /> */}
     </div>
   );
