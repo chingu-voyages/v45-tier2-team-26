@@ -5,9 +5,7 @@ import DoubleSlider from './DoubleSlider';
 import json from '../../../Meteorite_Landings.json';
 
 export default function Header({
-  searchResults,
   setSearchResults,
-  currentPage,
   resetPages,
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -94,6 +92,7 @@ export default function Header({
   };
 
   const handleSearch = () => {
+    resetPages();
     setName(name);
     setYear(year);
     setComposition(composition);
@@ -172,7 +171,7 @@ export default function Header({
     setMinMass(minValue);
     setMaxMass(maxValue);
     setSearchResults(data);
-    resetPages(1);
+    resetPages();
 
     // Testing...
     console.log(
