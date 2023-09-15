@@ -3,9 +3,9 @@ import { SpinnerDotted } from 'spinners-react';
 import React, { useState, useEffect } from 'react';
 import getLocation from './getLocation';
 
-function DetailData({ searchResults }) {
+function DetailData({ searchResults, currentPage }) {
   const itemsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [endIndex, setEndIndex] = useState(null);
   const [tableData, setTableData] = useState(null);
   const [locationMemo, setLocationMemo] = useState({});
@@ -127,13 +127,26 @@ function DetailData({ searchResults }) {
             </table>
           </div>
           <div>
-            <button className="pgBtn btn-previous" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)} type="button">Previous</button>
+            <button
+              className="pgBtn btn-previous"
+              disabled={currentPage === 1}
+              onClick={() => handlePageChange(currentPage - 1)}
+              type="button"
+            >
+              Previous
+            </button>
             <span>
               Page
-              {' '}
               {currentPage}
             </span>
-            <button className="pgBtn" disabled={endIndex >= meteorProps.length - 1} onClick={() => handlePageChange(currentPage + 1)} type="button">Next</button>
+            <button
+              className="pgBtn"
+              disabled={endIndex >= meteorProps.length - 1}
+              onClick={() => handlePageChange(currentPage + 1)}
+              type="button"
+            >
+              Next
+            </button>
           </div>
         </div>
       ) : (

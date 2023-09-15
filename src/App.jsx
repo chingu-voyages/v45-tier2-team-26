@@ -12,7 +12,7 @@ function App() {
   const [searchResults, setSearchResults] = useState(json);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = () => {
+  const resetPages = () => {
     setCurrentPage(1);
   };
 
@@ -22,7 +22,7 @@ function App() {
         searchResults={searchResults}
         setSearchResults={setSearchResults}
         currentPage={currentPage}
-        handlePageChange={handlePageChange}
+        resetPages={setCurrentPage}
       />
       <DetailData searchResults={searchResults} />
       {/* <SummaryMetric searchResults={searchResults} /> */}

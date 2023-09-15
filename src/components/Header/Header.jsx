@@ -8,7 +8,7 @@ export default function Header({
   searchResults,
   setSearchResults,
   currentPage,
-  handlePageChange,
+  resetPages,
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleHideMenu = () => {
@@ -20,6 +20,11 @@ export default function Header({
     console.log('show menu');
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // const resetPages = (pageNumber) => {
+  //   const newPage = pageNumber;
+  //   setCurrentPage(newPage);
+  // };
 
   let minValue = 1;
   let maxValue = 0;
@@ -94,6 +99,7 @@ export default function Header({
     setComposition(composition);
     setMinMass(minMass);
     setMaxMass(maxMass);
+    // resetPages(currentPage);
 
     let nameSet = data;
     let yearSet = data;
@@ -166,6 +172,7 @@ export default function Header({
     setMinMass(minValue);
     setMaxMass(maxValue);
     setSearchResults(data);
+    resetPages(1);
 
     // Testing...
     console.log(
