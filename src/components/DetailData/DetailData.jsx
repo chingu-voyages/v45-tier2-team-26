@@ -3,7 +3,7 @@ import { SpinnerDotted } from 'spinners-react';
 import React, { useState, useEffect } from 'react';
 import getLocation from './getLocation';
 
-function DetailData({ searchResults, currentPage }) {
+function DetailData({ searchResults, currentPage, handlePageChange }) {
   const itemsPerPage = 10;
   // const [currentPage, setCurrentPage] = useState(1);
   const [endIndex, setEndIndex] = useState(null);
@@ -86,11 +86,6 @@ function DetailData({ searchResults, currentPage }) {
     }
   }, [meteorProps, currentPage]);
 
-  const handlePageChange = (pageNumber) => {
-    const newPage = pageNumber;
-    setCurrentPage(newPage);
-  };
-
   return (
     <div className="detailContainer">
       <h2>Detail Data</h2>
@@ -137,6 +132,7 @@ function DetailData({ searchResults, currentPage }) {
             </button>
             <span>
               Page
+              {' '}
               {currentPage}
             </span>
             <button
