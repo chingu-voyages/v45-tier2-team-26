@@ -10,11 +10,28 @@ function App() {
   // });
 
   const [searchResults, setSearchResults] = useState(json);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const resetPages = () => {
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (pageNumber) => {
+    const newPage = pageNumber;
+    setCurrentPage(newPage);
+  };
 
   return (
     <div className="App">
-      <Header searchResults={searchResults} setSearchResults={setSearchResults} />
-      <DetailData searchResults={searchResults} />
+      <Header
+        setSearchResults={setSearchResults}
+        resetPages={resetPages}
+      />
+      <DetailData
+        searchResults={searchResults}
+        currentPage={currentPage}
+        handlePageChange={handlePageChange}
+      />
       {/* <SummaryMetric searchResults={searchResults} /> */}
     </div>
   );

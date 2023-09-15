@@ -19,6 +19,6 @@ export default async function fetchLocation(location) {
     return data;
   } catch (error) {
     // Handle any errors here
-    console.error('Fetch error:', error);
+    // console.error('Fetch error:', error);
   }
 }

@@ -4,7 +4,10 @@ import Fuse from 'fuse.js';
 import DoubleSlider from './DoubleSlider';
 import json from '../../../Meteorite_Landings.json';
 
-export default function Header({ searchResults, setSearchResults }) {
+export default function Header({
+  setSearchResults,
+  resetPages,
+}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleHideMenu = () => {
     console.log('hide menu');
@@ -15,6 +18,11 @@ export default function Header({ searchResults, setSearchResults }) {
     console.log('show menu');
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // const resetPages = (pageNumber) => {
+  //   const newPage = pageNumber;
+  //   setCurrentPage(newPage);
+  // };
 
   let minValue = 1;
   let maxValue = 0;
@@ -68,7 +76,9 @@ export default function Header({ searchResults, setSearchResults }) {
     const set4 = new Set(arr4.map((obj) => obj.id));
 
     // Find the intersection of IDs between all sets
-    const intersection = Array.from(set1).filter((id) => set2.has(id) && set3.has(id) && set4.has(id));
+    const intersection = Array.from(set1).filter(
+      (id) => set2.has(id) && set3.has(id) && set4.has(id),
+    );
 
     // Create an array of objects with matching IDs
     const result = arr1.filter((obj) => intersection.includes(obj.id));
@@ -82,18 +92,28 @@ export default function Header({ searchResults, setSearchResults }) {
   };
 
   const handleSearch = () => {
+    resetPages();
     setName(name);
     setYear(year);
     setComposition(composition);
     setMinMass(minMass);
     setMaxMass(maxMass);
+    // resetPages(currentPage);
 
     let nameSet = data;
     let yearSet = data;
     let compositionSet = data;
     let massRangeSet = data;
 
-    if (!(name || year || composition || minMass !== minValue || maxMass !== maxValue)) {
+    if (
+      !(
+        name
+        || year
+        || composition
+        || minMass !== minValue
+        || maxMass !== maxValue
+      )
+    ) {
       filteredResults = data;
     } else {
       if (name) {
@@ -120,10 +140,17 @@ export default function Header({ searchResults, setSearchResults }) {
       }
 
       if (minMass !== minValue || maxMass !== maxValue) {
-        massRangeSet = data.filter((obj) => (obj['mass (g)'] >= minMass && obj['mass (g)'] <= maxMass));
+        massRangeSet = data.filter(
+          (obj) => obj['mass (g)'] >= minMass && obj['mass (g)'] <= maxMass,
+        );
       }
 
-      filteredResults = findIntersectionById(nameSet, yearSet, compositionSet, massRangeSet);
+      filteredResults = findIntersectionById(
+        nameSet,
+        yearSet,
+        compositionSet,
+        massRangeSet,
+      );
     }
 
     setSearchResults(filteredResults);
@@ -144,6 +171,7 @@ export default function Header({ searchResults, setSearchResults }) {
     setMinMass(minValue);
     setMaxMass(maxValue);
     setSearchResults(data);
+    resetPages();
 
     // Testing...
     console.log(
@@ -199,7 +227,12 @@ export default function Header({ searchResults, setSearchResults }) {
               <div className="fieldGroup mobileFieldGroup" id="range">
                 <label htmlFor="">Mass Range:</label>
 
-                <DoubleSlider min={minMass} max={maxMass} setMin={setMinMass} setMax={setMaxMass} />
+                <DoubleSlider
+                  min={minMass}
+                  max={maxMass}
+                  setMin={setMinMass}
+                  setMax={setMaxMass}
+                />
               </div>
             </section>
           </section>
@@ -263,7 +296,12 @@ export default function Header({ searchResults, setSearchResults }) {
               <div className="fieldGroup" id="range">
                 <label htmlFor="">Mass Range:</label>
 
-                <DoubleSlider min={minMass} max={maxMass} setMin={setMinMass} setMax={setMaxMass} />
+                <DoubleSlider
+                  min={minMass}
+                  max={maxMass}
+                  setMin={setMinMass}
+                  setMax={setMaxMass}
+                />
               </div>
             </section>
           </section>
