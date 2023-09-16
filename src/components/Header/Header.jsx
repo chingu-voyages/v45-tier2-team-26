@@ -45,6 +45,7 @@ export default function Header({
   const [composition, setComposition] = useState('');
   const [minMass, setMinMass] = useState(minValue);
   const [maxMass, setMaxMass] = useState(maxValue);
+  const [resetSlider, setResetSlider] = useState(false);
 
   // Additional function that uses min and max values
   const handleMinMaxChange = (newMin, newMax) => {
@@ -171,7 +172,13 @@ export default function Header({
     setMinMass(minValue);
     setMaxMass(maxValue);
     setSearchResults(data);
+    setResetSlider(true);
     resetPages();
+
+    // Small delay needed to guarantee DoubleSlider has reset
+    setTimeout(() => {
+      setResetSlider(false);
+    }, 0);
 
     // Testing...
     console.log(
@@ -228,10 +235,12 @@ export default function Header({
                 <label htmlFor="">Mass Range:</label>
 
                 <DoubleSlider
-                  min={minMass}
-                  max={maxMass}
+                  min={minValue}
+                  max={maxValue}
                   setMin={setMinMass}
                   setMax={setMaxMass}
+                  resetSlider={resetSlider}
+                  onRangeChange={handleMinMaxChange}
                 />
               </div>
             </section>
@@ -301,6 +310,7 @@ export default function Header({
                   max={maxValue}
                   setMin={setMinMass}
                   setMax={setMaxMass}
+                  resetSlider={resetSlider}
                   onRangeChange={handleMinMaxChange}
                 />
               </div>

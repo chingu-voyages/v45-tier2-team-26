@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react';
 import './DoubleSlider.css';
 
 function DoubleSlider({
-  min, max, setMin, setMax, onRangeChange,
+  min, max, setMin, setMax, onRangeChange, resetSlider,
 }) {
   const [leftValue, setLeftValue] = useState(min);
   const [rightValue, setRightValue] = useState(max);
+
+  useEffect(() => {
+    if (resetSlider) {
+      setLeftValue(min);
+      setRightValue(max);
+      onRangeChange(min, max);
+    }
+  }, [resetSlider, min, max, onRangeChange]);
 
   useEffect(() => {
     // Ensure leftValue is always less than or equal to rightValue
