@@ -101,6 +101,10 @@ export default function Header({
     setMaxMass(maxMass);
     // resetPages(currentPage);
 
+    if (isMenuOpen) {
+      handleHideMenu();
+    }
+
     let nameSet = data;
     let yearSet = data;
     let compositionSet = data;
