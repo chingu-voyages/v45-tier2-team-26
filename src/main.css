@@ -7,3 +7,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.App {
+  display: flex;
+  flex-direction: column;
+  gap: 50px 0;
+}
