@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './DoubleSlider.css';
 
 function DoubleSlider({
-  min, max, setMin, setMax,
+  min, max, setMin, setMax, onRangeChange,
 }) {
   const [leftValue, setLeftValue] = useState(min);
   const [rightValue, setRightValue] = useState(max);
 
   useEffect(() => {
     // Ensure leftValue is always less than or equal to rightValue
-    if (leftValue > rightValue) {
+    if (leftValue >= rightValue) {
       setLeftValue(rightValue);
     }
     // setMin(leftValue);
@@ -31,6 +31,7 @@ function DoubleSlider({
     if (newValue >= min && newValue <= rightValue) {
       setLeftValue(newValue);
     }
+    onRangeChange(newValue, rightValue);
   };
 
   const handleRightInputChange = (event) => {
@@ -38,6 +39,7 @@ function DoubleSlider({
     if (newValue >= leftValue && newValue <= max) {
       setRightValue(newValue);
     }
+    onRangeChange(leftValue, newValue);
   };
 
   return (
@@ -48,7 +50,8 @@ function DoubleSlider({
           min={min}
           max={max}
           value={leftValue}
-          onChange={(e) => setLeftValue(parseInt(e.target.value))}
+          // onChange={(e) => setLeftValue(parseInt(e.target.value))}
+          onChange={handleLeftInputChange}
           className="slider"
         />
         <input
@@ -56,7 +59,8 @@ function DoubleSlider({
           min={min}
           max={max}
           value={rightValue}
-          onChange={(e) => setRightValue(parseInt(e.target.value))}
+          // onChange={(e) => setRightValue(parseInt(e.target.value))}
+          onChange={handleRightInputChange}
           className="slider"
         />
       </div>

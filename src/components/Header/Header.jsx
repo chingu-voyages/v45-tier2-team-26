@@ -297,10 +297,11 @@ export default function Header({
                 <label htmlFor="">Mass Range:</label>
 
                 <DoubleSlider
-                  min={minMass}
-                  max={maxMass}
+                  min={minValue}
+                  max={maxValue}
                   setMin={setMinMass}
                   setMax={setMaxMass}
+                  onRangeChange={handleMinMaxChange}
                 />
               </div>
             </section>
