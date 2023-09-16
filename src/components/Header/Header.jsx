@@ -120,7 +120,7 @@ export default function Header({
         const fuse = new Fuse(data, {
           keys: ['name'],
           includeMatches: true,
-          threshold: 0.3,
+          threshold: 0.25,
         });
         const fuseResults = fuse.search(name);
 
