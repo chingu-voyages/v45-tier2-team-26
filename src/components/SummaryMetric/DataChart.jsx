@@ -51,8 +51,6 @@ function DataChart({
           text: xLabel,
         },
       },
-      responsive: false,
-      maintainAspectRatio: false,
     },
   };
 

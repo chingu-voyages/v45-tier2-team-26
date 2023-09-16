@@ -3,27 +3,22 @@
   display: flex;
   flex-direction: column;
   gap: 10px 0;
-  margin: 1.5rem;
-}
-
-.generalContainer {
-  margin: 0 auto;
-  display: flex;
 }
 
 .chartContainer {
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-}
-
-
-.chart {
-  width: 100%;
-  height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 0 10px;
+}
+
+.chart {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
   border-radius: 10px;
   overflow: hidden;
 }

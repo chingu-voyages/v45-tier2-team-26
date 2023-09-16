@@ -3,7 +3,6 @@ import SummaryMetric from './components/SummaryMetric/SummaryMetric';
 import Header from './components/Header/Header';
 import json from '../Meteorite_Landings.json';
 import DetailData from './components/DetailData/DetailData';
-import Footer from './components/Footer/Footer';
 
 function App() {
   // useEffect(() => {
@@ -28,13 +27,12 @@ function App() {
         setSearchResults={setSearchResults}
         resetPages={resetPages}
       />
-      <SummaryMetric searchResults={searchResults} />
       <DetailData
         searchResults={searchResults}
         currentPage={currentPage}
         handlePageChange={handlePageChange}
       />
-      <Footer />
+      {/* <SummaryMetric searchResults={searchResults} /> */}
     </div>
   );
 }

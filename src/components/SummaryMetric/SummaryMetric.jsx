@@ -61,9 +61,9 @@ function SummaryMetric({ searchResults }) {
     if (!year) {
       return null;
     }
-    const parsedYear = parseInt(year, 10);
-    if (parsedYear.length >= 4) {
-      return parsedYear.slice(0, 4);
+    const parsedYear = Number(year.slice(0, 4));
+    if (Number.isNaN(parsedYear)) {
+      return null;
     }
     return parsedYear;
   };
@@ -202,7 +202,7 @@ function SummaryMetric({ searchResults }) {
 
   return (
     <div className="summaryContainer">
-      <h2>Summary</h2>
+      <h1>Summary</h1>
       <p>
         Total number of strikes:
         {total}
@@ -234,30 +234,28 @@ function SummaryMetric({ searchResults }) {
         {Object.keys(compositionGroup).map((group) => (
           <option key={group} value={group}>{group}</option>))}
       </select>
-      <div className="generalContainer">
-        <div className="chartContainer">
-          <div onClick={() => changeChart(-1)} className="leftArrow" />
-          <div className="chart">
-            {
-              switchChart % 2 === 0 ? (
-                <DataChart
-                  label="Total number of strikes by year"
-                  dataObject={numberByYearChartData}
-                  type="bar"
-                  xLabel="Year"
-                  yLabel="Number of strikes"
-                />
-              ) : (
-                <DataChart
-                  label="Total number of strikes by composition"
-                  dataObject={numberByCompositionChartData}
-                  type="doughnut"
-                />
-              )
-            }
-          </div>
-          <div onClick={() => changeChart(1)} className="rightArrow" />
+      <div className="chartContainer">
+        <div onClick={() => changeChart(-1)} className="leftArrow" />
+        <div className="chart">
+          {
+            switchChart % 2 === 0 ? (
+              <DataChart
+                label="Total number of strikes by year"
+                dataObject={numberByYearChartData}
+                type="bar"
+                xLabel="Year"
+                yLabel="Number of strikes"
+              />
+            ) : (
+              <DataChart
+                label="Total number of strikes by composition"
+                dataObject={numberByCompositionChartData}
+                type="doughnut"
+              />
+            )
+          }
         </div>
+        <div onClick={() => changeChart(1)} className="rightArrow" />
       </div>
     </div>
   );
