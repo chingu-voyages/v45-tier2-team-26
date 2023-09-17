@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable object-property-newline */
 import { expect, test, describe } from 'vitest';
 import {
