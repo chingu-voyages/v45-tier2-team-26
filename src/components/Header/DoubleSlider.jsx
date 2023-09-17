@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './DoubleSlider.css';
 
 function DoubleSlider({
-  min, max, setMin, setMax, onRangeChange, resetSlider,
+  min, max, onRangeChange, resetSlider,
 }) {
   const [leftValue, setLeftValue] = useState(min);
   const [rightValue, setRightValue] = useState(max);
@@ -57,7 +57,6 @@ function DoubleSlider({
           min={min}
           max={max}
           value={leftValue}
-          // onChange={(e) => setLeftValue(parseInt(e.target.value))}
           onChange={handleLeftInputChange}
           className="slider"
         />
@@ -66,7 +65,6 @@ function DoubleSlider({
           min={min}
           max={max}
           value={rightValue}
-          // onChange={(e) => setRightValue(parseInt(e.target.value))}
           onChange={handleRightInputChange}
           className="slider"
         />

@@ -47,7 +47,7 @@ export default function Header({
   const [maxMass, setMaxMass] = useState(maxValue);
   const [resetSlider, setResetSlider] = useState(false);
 
-  // Additional function that uses min and max values
+  // Callback function that updates the minMass and maxMass values
   const handleMinMaxChange = (newMin, newMax) => {
     setMinMass(newMin);
     setMaxMass(newMax);
@@ -241,8 +241,6 @@ export default function Header({
                 <DoubleSlider
                   min={minValue}
                   max={maxValue}
-                  setMin={setMinMass}
-                  setMax={setMaxMass}
                   resetSlider={resetSlider}
                   onRangeChange={handleMinMaxChange}
                 />
@@ -312,8 +310,6 @@ export default function Header({
                 <DoubleSlider
                   min={minValue}
                   max={maxValue}
-                  setMin={setMinMass}
-                  setMax={setMaxMass}
                   resetSlider={resetSlider}
                   onRangeChange={handleMinMaxChange}
                 />
