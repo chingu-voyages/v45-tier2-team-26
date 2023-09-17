@@ -20,8 +20,7 @@ function DoubleSlider({
     if (leftValue >= rightValue) {
       setLeftValue(rightValue);
     }
-    // setMin(leftValue);
-    // setMax(rightValue);
+
     updateBackground();
   }, [leftValue, rightValue]);
 
