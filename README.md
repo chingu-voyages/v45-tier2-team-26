@@ -1,28 +1,86 @@
-# voyage-tasks
+# FireBall
 
-Your project's `readme` is as important to success as your code. For 
-this reason you should put as much care into its creation and maintenance
-as you would any other component of the application.
+## Overview
 
-If you are unsure of what should go into the `readme` let this article,
-written by an experienced Chingu, be your starting point - 
-[Keys to a well written README](https://tinyurl.com/yk3wubft).
+[NASA's Open Data Portal](https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh) hosts a comprehensive data set from The Meteoritical Society, containing information on all known meteorite landings. The FireBall app allows the user to search and visualize these data.
 
-And before we go there's "one more thing"! Once you decide what to include
-in your `readme` feel free to replace the text we've provided here.
+LIVE LINK: 
 
-> Own it & Make it your Own!
+This app was created as part of [Chingu Voyage 45, Tier 2](https://github.com/chingu-voyages/voyage-project-tier2-fireball).
 
-## Team Documents
+## Features
 
-You may find these helpful as you work together to organize your project.
+- The search bar is built with fuse.js. The user can search the data by any of the following:
+    - Name
+    - Year of strike
+    - Meteorite composition
+    - Mass range (low to high, inclusive)
 
-- [Team Project Ideas](./docs/team_project_ideas.md)
-- [Team Decision Log](./docs/team_decision_log.md)
+- The search results are shown in two formats:
+    1. A detailed data table. 
+        - The table shows information for 10 meteorites at a time and allows the user to advance back and forth through the data. 
+        - The detailed data table dynamically converts the logitude and latitude of the meteorite landing into a location name using the Radar API's reverse geocoding functionality.
+    1. Summary metrics.
+        - Includes the total number of strikes and the average mass of the strikes.
+        - Shows a graphical display for the number of strikes by year and the number of strikes by meteorite composition. The graphs are built using the Chart.js library.
 
-Meeting Agenda templates (located in the `/docs` directory in this repo):
+- The app is responsive. At smaller screen sizes:
+    - The search bar is placed inside a drawer that can be accessed via a hamburger menu. 
+    - The detailed data table shifts to a vertical format.
 
-- Meeting - Voyage Kickoff --> ./docs/meeting-voyage_kickoff.docx
-- Meeting - App Vision & Feature Planning --> ./docs/meeting-vision_and_feature_planning.docx
-- Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
-- Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
+## Setting up a local version
+
+Clone the project
+
+```bash
+  git clone https://github.com/chingu-voyages/v45-tier2-team-26.git
+```
+
+Go to the project directory
+
+```bash
+  cd v45-tier2-team-26
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
+
+## Dependencies
+
+- [chart.js](https://www.npmjs.com/package/chart.js) v3.7.0
+- [chartjs-plugin-datalabels](https://www.npmjs.com/package/chartjs-plugin-datalabels) v2.2.0
+- [fuse.js](https://www.npmjs.com/package/fuse.js) v6.6.2
+- [react](https://www.npmjs.com/package/react) v18.2.0
+- [react-chartjs-2](https://www.npmjs.com/package/react-chartjs-2) v5.2.0
+- [react-dom](https://www.npmjs.com/package/react-dom) v18.2.0
+- [spinners-react](https://www.npmjs.com/package/spinners-react) v1.0.7
+
+## Dev Dependencies
+
+- [@types/react](https://www.npmjs.com/package/@types/react) v18.2.20
+- [@types/react-dom](https://www.npmjs.com/package/@types/react-dom) v18.2.7
+- [@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react) v4.0.4
+- [eslint](https://www.npmjs.com/package/eslint) v8.47.0
+- [eslint-config-airbnb](https://www.npmjs.com/package/eslint-config-airbnb) v19.0.4
+- [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) v2.28.0
+- [eslint-plugin-jsx-a11y](https://www.npmjs.com/package/eslint-plugin-jsx-a11y) v6.7.1
+- [eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react) v7.33.1
+- [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks) v4.6.0
+- [vite](https://www.npmjs.com/package/vite) v4.4.9
+- [vite-plugin-eslint2](https://www.npmjs.com/package/vite-plugin-eslint2) v4.0.0
+
+## Acknowledgements
+- The meteorite landings dataset we used is provided by [NASA's Open Data Portal](https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh).
+- Special thanks to [Chingu](https://www.chingu.io/) for their support and resources throughout the development of this project.
+
+## Licence
+[MIT](https://choosealicense.com/licenses/mit/)
