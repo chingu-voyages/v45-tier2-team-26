@@ -10,12 +10,12 @@ export default function Header({
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleHideMenu = () => {
-    console.log('hide menu');
+    // console.log('hide menu');
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleShowMenu = () => {
-    console.log('show menu');
+    // console.log('show menu');
     setIsMenuOpen(!isMenuOpen);
   };
 
@@ -159,12 +159,6 @@ export default function Header({
     }
 
     setSearchResults(filteredResults);
-
-    console.log(
-      `Query entered: name = ${name}, year = ${year}, composition = ${composition}, min=${minMass}, max=${maxMass}\nData found:\n ${JSON.stringify(
-        filteredResults,
-      )}\nDone!`,
-    );
   };
 
   const handleClear = () => {
@@ -183,13 +177,6 @@ export default function Header({
     setTimeout(() => {
       setResetSlider(false);
     }, 0);
-
-    // Testing...
-    console.log(
-      `Clear clicked! name = ${name}, year = ${year}, composition = ${composition}, min=${minMass}, max=${maxMass}\nData found:\n ${JSON.stringify(
-        filteredResults,
-      )}\nDone!`,
-    );
   };
 
   return (
