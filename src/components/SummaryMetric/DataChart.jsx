@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Bar, Doughnut } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -21,17 +22,18 @@ function DataChart({
     ],
   };
 
-  console.log('labels', data.labels);
-
   const doughnutOptions = {
     plugins: {
       datalabels: {
         formatter: (value, context) => {
-          console.log('context', context);
           const sum = context.dataset.data.reduce((acc, curr) => acc + curr, 0);
           const percentage = Math.round((value / sum) * 100);
-          const label = context.chart.data.labels[context.dataIndex];
-          return `${label} ${percentage}%`;
+          if (percentage > 2) {
+            const dataLabels = context.chart.data.labels[context.dataIndex].split(' ');
+            const shortLabel = dataLabels[dataLabels.length - 1];
+            return `${shortLabel} ${percentage}%`;
+          }
+          return null;
         },
       },
     },

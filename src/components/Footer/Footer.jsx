@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import './Footer.css';
 
 export default function Header() {
