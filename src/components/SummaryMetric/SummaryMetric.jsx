@@ -249,7 +249,7 @@ function SummaryMetric({ searchResults }) {
                   </select>
                 </label>
                 {charts[switchChart].option}
-                <button type="button" onClick={handleReset}>Reset to Default</button>
+                <button className="searchBtn" type="button" onClick={handleReset}>Reset to Default</button>
               </div>
               <div className="chartDetails">
                 <div onClick={() => changeChart(-1, charts.length)} className="leftArrow" />

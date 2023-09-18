@@ -142,7 +142,9 @@
   }
 
   .detail-data-btns {
-    display: flex;
+    gap: 10px;
+    display: grid;
+    grid-auto-flow: column;
     justify-content: center;
     align-items: center;
   }
@@ -174,4 +176,10 @@
     display: flex;
     justify-content: center;
     margin-top: 150px;
+  }
+
+  @media (max-width: 30em) {
+    .detail-data-btns {
+      grid-auto-flow: row;
+    }
   }
