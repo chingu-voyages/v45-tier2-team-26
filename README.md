@@ -4,7 +4,7 @@
 
 [NASA's Open Data Portal](https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh) hosts a comprehensive data set from The Meteoritical Society, containing information on all known meteorite landings. The FireBall app allows the user to search and visualize these data.
 
-LIVE LINK:
+LIVE LINK: https://meteorstrikes.surge.sh/
 
 This app was created as part of [Chingu Voyage 45, Tier 2](https://github.com/chingu-voyages/voyage-project-tier2-fireball).
 
@@ -78,6 +78,7 @@ Start the server
 - [vite](https://www.npmjs.com/package/vite) v4.4.9
 - [vite-plugin-eslint2](https://www.npmjs.com/package/vite-plugin-eslint2) v4.0.0
 - [vitest](https://www.npmjs.com/package/vitest) v0.34.4
+- [@divriots/jampack](https://www.npmjs.com/package/@divriots/jampack) v0.20.2
 
 ## Acknowledgements
 - The meteorite landings dataset we used is provided by [NASA's Open Data Portal](https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh).
