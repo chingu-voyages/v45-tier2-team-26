@@ -121,7 +121,7 @@ function DetailData({ searchResults, currentPage, handlePageChange }) {
               </tbody>
             </table>
           </div>
-          <div>
+          <div className="detail-data-btns">
             <button
               className="pgBtn btn-previous"
               disabled={currentPage === 1}

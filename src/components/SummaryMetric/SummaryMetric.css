@@ -26,6 +26,9 @@
 .data {
   width: 90%;
   height: 400px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
 }
 
 label {

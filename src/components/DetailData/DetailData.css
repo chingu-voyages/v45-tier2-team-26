@@ -141,6 +141,12 @@
     color: black;
   }
 
+  .detail-data-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .btn-previous {
     background: lightcoral
   }
